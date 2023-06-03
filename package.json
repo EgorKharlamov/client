@@ -47,5 +47,10 @@
     "typescript": "5.0.4",
     "vite": "4.3.5",
     "webpack": "5.82.1"
+  },
+  "dependencies": {
+    "@heroicons/vue": "2.0.18",
+    "@pinia/nuxt": "0.4.11",
+    "pinia": "2.1.3"
   }
 }
