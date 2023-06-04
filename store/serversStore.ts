@@ -14,5 +14,14 @@ export const useServersStore = defineStore("servers", {
     async loadServers() {
       this.servers = await useApi(Method.GET, serverEndpoint.getServers());
     },
+    async addServer(data) {
+      await useApi(Method.POST, serverEndpoint.createServer(), { body: data });
+    },
+    async deleteServer(params) {
+      await useApi(
+        Method.DELETE,
+        serverEndpoint.deleteServerByName(params.name)
+      );
+    },
   },
 });

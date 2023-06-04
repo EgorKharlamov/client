@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <div>Admin panel</div>
+    <div>VPN</div>
     <div :class="$style.rightBlock">
       <span v-show="userStore.getUserName">{{ userStore.getUserName }}</span>
       <button type="button" @click="userStore.logOut">

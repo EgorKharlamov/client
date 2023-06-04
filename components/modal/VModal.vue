@@ -1,11 +1,18 @@
 <template>
   <div :class="$style.bg">
     <div :class="$style.container">
-      <button type="button" :class="$style.buttonExit" @click="emit('close')">
+      <button type="button" :class="$style.buttonExit" @click="emit('close:x')">
         <x-mark-icon :class="$style.icon" />
       </button>
-      <h1>modal</h1>
-      <slot />
+      <div :class="$style.header">
+        <slot name="header"></slot>
+      </div>
+      <div :class="$style.body">
+        <slot />
+      </div>
+      <div :class="$style.footer">
+        <slot name="footer"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -13,7 +20,7 @@
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/solid";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close:x"]);
 </script>
 
 <style module>
@@ -22,7 +29,7 @@ const emit = defineEmits(["close"]);
 }
 
 .container {
-  @apply min-w-[500px] min-h-[200px] bg-gray-100 relative;
+  @apply rounded min-w-[500px] min-h-[200px] bg-gray-100 relative flex flex-col justify-between py-2 px-3;
 }
 
 .buttonExit {
@@ -31,5 +38,15 @@ const emit = defineEmits(["close"]);
 
 .icon {
   @apply w-[20px] h-[20px];
+}
+
+.header,
+.footer,
+.body {
+  @apply p-1.5;
+}
+
+.footer {
+  @apply flex justify-end;
 }
 </style>
