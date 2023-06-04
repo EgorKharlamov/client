@@ -13,8 +13,8 @@
         <tr>
           <th :class="$style.cell">id</th>
           <th :class="$style.cell">name</th>
-          <th :class="$style.cell">addr</th>
-          <th :class="$style.cell">maxUsers</th>
+          <th :class="$style.cell">address</th>
+          <th :class="$style.cell">maximum users</th>
           <th :class="$style.cell">available slots</th>
           <th :class="$style.cell">actions</th>
         </tr>
