@@ -18,7 +18,7 @@
           <th :class="$style.cell">available slots</th>
           <th :class="$style.cell">actions</th>
         </tr>
-        <tr v-for="server in getServers" :key="server?.id">
+        <tr v-for="server in getServers" :key="server?.id" :class="$style.row">
           <td :class="$style.cell">{{ server?.id }}</td>
           <td :class="$style.cell">{{ server?.name }}</td>
           <td :class="$style.cell">{{ server?.addr }}</td>
@@ -52,36 +52,24 @@
 
 <script setup>
 import { PlusIcon } from "@heroicons/vue/24/solid";
-import { useToast } from "vue-toastification";
-import { storeToRefs } from "pinia";
-import { useServersStore } from "~/store/serversStore";
-import VModalAddServer from "~/components/modal/VModalAddServer.vue";
-import VModalDeleteServerConfirm from "~/components/modal/VModalDeleteServerConfirm.vue";
+import VModalAddServer from "~/components/modal/server/VModalAddServer.vue";
+import VModalDeleteServerConfirm from "~/components/modal/server/VModalDeleteServerConfirm.vue";
+import { useServer } from "~/composables/useServer";
 
 definePageMeta({
   middleware: ["auth", "manager", "client"],
   layout: "tabs",
 });
-const modalOpened = ref(false);
-const modalDeleteConfirmOpened = ref(false);
-const serverDeleteName = ref("");
 
-const onDeleteClickHandler = (name) => {
-  modalDeleteConfirmOpened.value = true;
-  serverDeleteName.value = name;
-};
+const {
+  loadServers,
+  modalOpened,
+  modalDeleteConfirmOpened,
+  getServers,
+  onDeleteClickHandler,
+  serverDeleteName,
+} = useServer();
 
-const serverStore = useServersStore();
-const { getServers } = storeToRefs(serverStore);
-const toast = useToast();
-
-const loadServers = async () => {
-  try {
-    await serverStore.loadServers();
-  } catch (e) {
-    toast.error(e.message);
-  }
-};
 await loadServers();
 </script>
 
@@ -89,9 +77,10 @@ await loadServers();
 .table {
   @apply table-auto w-full mt-2;
 }
-.row {
-  @apply flex gap-2;
+.row:hover td {
+  @apply bg-gray-200;
 }
+
 .cell {
   @apply text-center border;
 }

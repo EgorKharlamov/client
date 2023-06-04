@@ -1,12 +1,31 @@
+import { storeToRefs } from "pinia";
+import { useToast } from "vue-toastification";
 import { useServersStore } from "~/store/serversStore";
 
 export const useServer = () => {
+  const serverStore = useServersStore();
+  const modalOpened = ref(false);
+  const modalDeleteConfirmOpened = ref(false);
+  const serverDeleteName = ref("");
   const name = useState("name", () => "");
   const address = useState("address", () => "");
   const maxUsers = useState("maxUsers", () => 20);
   const isLoading = useState("isLoading", () => false);
 
-  const serverStore = useServersStore();
+  const onDeleteClickHandler = (name: string) => {
+    modalDeleteConfirmOpened.value = true;
+    serverDeleteName.value = name;
+  };
+  const { getServers } = storeToRefs(serverStore);
+  const toast = useToast();
+
+  const loadServers = async () => {
+    try {
+      await serverStore.loadServers();
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
 
   const createServer = async () => {
     isLoading.value = true;
@@ -37,5 +56,11 @@ export const useServer = () => {
     createServer,
     deleteServer,
     isLoading,
+    loadServers,
+    getServers,
+    modalOpened,
+    modalDeleteConfirmOpened,
+    onDeleteClickHandler,
+    serverDeleteName,
   };
 };
