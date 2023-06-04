@@ -1,9 +1,12 @@
 <template>
   <div>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
+<script setup></script>
 <style>
 @import "assets/css/tailwind.css";
 .page-enter-active,

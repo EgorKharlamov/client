@@ -6,10 +6,10 @@ import { Tabs } from "~/components/login/constants";
 export const useLogin = () => {
   const currentTab = ref(Tabs.SignUp);
   const secondTab = ref(Tabs.SignIn);
-  const email = ref("egor@gmail.com");
+  const email = ref("hellokitty@gmail.com");
   const phone = ref("79239232233");
-  const pass = ref("Qwerty12");
-  const passRepeat = ref("Qwerty12");
+  const pass = ref("Verystrongpassword1");
+  const passRepeat = ref("Verystrongpassword1");
   const name = ref("Egor");
   const typePass = ref("password");
   const typePassRepeat = ref("password");

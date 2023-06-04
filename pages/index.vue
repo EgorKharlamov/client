@@ -1,41 +1,30 @@
 <template>
-  <div>
-    <p class="text-red-600 text-[16px]">Hello from index</p>
-    <button
-      type="button"
-      class="px-3 py-2 bg-blue-400 rounded text-white"
-      @click="loadServers"
-    >
-      get servers
-    </button>
-    <button
-      type="button"
-      class="ml-5 px-3 py-2 bg-blue-400 rounded text-white"
-      @click="logout"
-    >
-      logout
-    </button>
+  <div :class="$style.container">
+    <h3>Text</h3>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from "#app";
-import { useApi } from "~/composables/useApi";
-import { Method } from "~/api/constants";
-
 definePageMeta({
   middleware: "auth",
+  layout: "tabs",
 });
-
-const auth = useCookie("auth");
-const router = useRouter();
-
-const loadServers = async () => {
-  await useApi(Method.GET, "/servers");
-};
-
-const logout = () => {
-  auth.value = "";
-  router.push("/auth");
-};
 </script>
+
+<style module>
+.container {
+  @apply max-w-[800px];
+}
+
+.links {
+  @apply flex gap-3;
+}
+
+.link {
+  @apply py-1 px-2 border-2 border-blue-400 rounded-xl text-black;
+}
+
+.linkActive {
+  @apply py-1 px-2 bg-blue-400 rounded-xl text-gray-100;
+}
+</style>

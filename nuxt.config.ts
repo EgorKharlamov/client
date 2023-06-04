@@ -20,4 +20,7 @@ export default defineNuxtConfig({
       baseURL: process.env.NUXT_PUBLIC_BASE_URL || "http://localhost:2310/",
     },
   },
+  build: {
+    transpile: ["vue-toastification"],
+  },
 });
