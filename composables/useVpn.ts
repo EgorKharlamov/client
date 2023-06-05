@@ -46,7 +46,13 @@ export const useVpn = () => {
     modalApproveOpened.value = true;
   };
 
+  const clearFormCreationVpn = () => {
+    forUserEmail.value = "";
+    prefix.value = "";
+  };
+
   const createVpn = async () => {
+    isLoading.value = true;
     try {
       await serverStore.loadServers();
       const availableServer = getServers.value.find(
@@ -61,9 +67,11 @@ export const useVpn = () => {
       };
       await vpnStore.createVpn(data);
       await vpnStore.loadVpns();
+      clearFormCreationVpn();
     } catch (e) {
       toast.error(e.message);
     }
+    isLoading.value = false;
   };
 
   const approveVpn = async (name: string) => {

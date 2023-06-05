@@ -13,14 +13,6 @@
         </label>
         <label>
           <input
-            v-model="count"
-            :class="$style.input"
-            type="number"
-            placeholder="count"
-          />
-        </label>
-        <label>
-          <input
             v-model="prefix"
             :class="$style.input"
             type="text"
@@ -55,7 +47,7 @@ import VModal from "~/components/modal/VModal.vue";
 import { useVpn } from "~/composables/useVpn";
 
 const emit = defineEmits(["close"]);
-const { forUserEmail, count, prefix, isLoading, createVpn } = useVpn();
+const { forUserEmail, prefix, isLoading, createVpn } = useVpn();
 const closeModal = () => emit("close");
 const createVpnHandler = async () => {
   await createVpn();
