@@ -9,32 +9,25 @@
       <span class="ml-1">server</span>
     </button>
     <div>
-      <table :class="$style.table">
-        <tr>
-          <th :class="$style.cell">id</th>
-          <th :class="$style.cell">name</th>
-          <th :class="$style.cell">address</th>
-          <th :class="$style.cell">maximum users</th>
-          <th :class="$style.cell">available slots</th>
-          <th :class="$style.cell">actions</th>
-        </tr>
-        <tr v-for="server in getServers" :key="server?.id" :class="$style.row">
-          <td :class="$style.cell">{{ server?.id }}</td>
-          <td :class="$style.cell">{{ server?.name }}</td>
-          <td :class="$style.cell">{{ server?.addr }}</td>
-          <td :class="$style.cell">{{ server?.maxUsers }}</td>
-          <td :class="$style.cell">{{ server?.availableSlots }}</td>
-          <td :class="$style.cell">
-            <button
-              type="button"
-              :class="$style.deleteBtn"
-              @click="onDeleteClickHandler(server.name)"
-            >
-              delete
-            </button>
-          </td>
-        </tr>
-      </table>
+      <v-table
+        :headers="headers"
+        :rows="serversForTable"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @search="debouncedSearchQuery"
+        @page:next="pageNext"
+        @page:prev="pagePrev"
+      >
+        <template #actions="{ row: server }">
+          <button
+            type="button"
+            :class="$style.deleteBtn"
+            @click="onDeleteClickHandler(server.name)"
+          >
+            delete
+          </button>
+        </template>
+      </v-table>
     </div>
     <v-modal-add-server
       v-if="modalOpened"
@@ -55,6 +48,7 @@ import { PlusIcon } from "@heroicons/vue/24/solid";
 import VModalAddServer from "~/components/modal/server/VModalAddServer.vue";
 import VModalDeleteServerConfirm from "~/components/modal/server/VModalDeleteServerConfirm.vue";
 import { useServer } from "~/composables/useServer";
+import VTable from "~/components/VTable.vue";
 
 definePageMeta({
   middleware: ["auth", "manager", "client"],
@@ -68,7 +62,24 @@ const {
   getServers,
   onDeleteClickHandler,
   serverDeleteName,
+  pageNext,
+  pagePrev,
+  currentPage,
+  lastPage,
+  debouncedSearchQuery,
 } = useServer();
+
+const headers = ["id", "name", "address", "maximum users", "available slots"];
+
+const serversForTable = computed(() =>
+  getServers.value.map((server) => ({
+    id: server.id,
+    name: server.name,
+    addr: server.addr,
+    maxUsers: server.maxUsers,
+    availableSlots: server.availableSlots,
+  }))
+);
 
 await loadServers();
 </script>

@@ -9,6 +9,11 @@
 <script setup></script>
 <style>
 @import "assets/css/tailwind.css";
+
+body.modal-opened {
+  overflow: hidden;
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;

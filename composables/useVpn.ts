@@ -1,5 +1,6 @@
 import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
+import { debounce } from "lodash-es";
 import { useVpnsStore } from "~/store/vpnsStore";
 import { useServersStore } from "~/store/serversStore";
 import { VpnStatus } from "~/api/constants";
@@ -7,7 +8,7 @@ import { VpnStatus } from "~/api/constants";
 export const useVpn = () => {
   const toast = useToast();
   const vpnStore = useVpnsStore();
-  const { getVpns } = storeToRefs(vpnStore);
+  const { getVpns, getCount } = storeToRefs(vpnStore);
   const serverStore = useServersStore();
   const { getServers } = storeToRefs(serverStore);
   const serverAddr = useState("serverAddr", () => "");
@@ -18,7 +19,28 @@ export const useVpn = () => {
   const modalApproveOpened = useState("modalApproveOpened", () => false);
   const modalApproveName = useState("modalApproveName", () => "");
   const isLoading = useState("isLoading", () => false);
+  const currentPage = useState("currentPage", () => 1);
+  const countOnPage = useState("countOnPage", () => 20);
 
+  const lastPage = computed(() =>
+    Math.ceil(getCount.value / countOnPage.value)
+  );
+
+  const pagePrev = async () => {
+    currentPage.value = currentPage.value - 1;
+    const params = { page: currentPage.value, count: countOnPage.value };
+    await vpnStore.loadVpns(params);
+  };
+  const pageNext = async () => {
+    currentPage.value = currentPage.value + 1;
+    const params = { page: currentPage.value, count: countOnPage.value };
+    await vpnStore.loadVpns(params);
+  };
+  const searchQuery = async (query: string) => {
+    const params = { page: currentPage.value, count: countOnPage.value, query };
+    await vpnStore.loadVpns(params);
+  };
+  const debouncedSearchQuery = debounce(searchQuery, 500);
   const approveVpnClick = (name: string) => {
     modalApproveName.value = name;
     modalApproveOpened.value = true;
@@ -75,5 +97,10 @@ export const useVpn = () => {
     isLoading,
     createVpn,
     modalApproveName,
+    currentPage,
+    lastPage,
+    pagePrev,
+    pageNext,
+    debouncedSearchQuery,
   };
 };

@@ -9,36 +9,27 @@
       <span class="ml-1">vpn</span>
     </button>
     <div>
-      <table :class="$style.table">
-        <tr>
-          <th :class="$style.cell">id</th>
-          <th :class="$style.cell">user id</th>
-          <th :class="$style.cell">name</th>
-          <th :class="$style.cell">server addr</th>
-          <th :class="$style.cell">user email</th>
-          <th :class="$style.cell">status</th>
-          <th :class="$style.cell">actions</th>
-        </tr>
-        <tr v-for="vpn in getVpns" :key="vpn?.id" :class="$style.row">
-          <td :class="$style.cell">{{ vpn?.id }}</td>
-          <td :class="$style.cell">{{ vpn?.createdByUserId }}</td>
-          <td :class="$style.cell">{{ vpn?.name }}</td>
-          <td :class="$style.cell">{{ vpn?.serverAddr }}</td>
-          <td :class="$style.cell">{{ vpn?.forUserEmail }}</td>
-          <td :class="$style.cell">{{ vpn?.status }}</td>
-          <td :class="$style.cell">
-            <button
-              v-if="vpn.status !== VpnStatus.Approved"
-              type="button"
-              :class="$style.deleteBtn"
-              @click="approveVpnClick(vpn.name)"
-            >
-              approve
-            </button>
-            <div v-else>-</div>
-          </td>
-        </tr>
-      </table>
+      <v-table
+        :headers="headers"
+        :rows="vpnsForTable"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @search="debouncedSearchQuery"
+        @page:next="pageNext"
+        @page:prev="pagePrev"
+      >
+        <template #actions="{ row: vpn }">
+          <button
+            v-if="vpn?.status !== VpnStatus.Approved"
+            type="button"
+            :class="$style.deleteBtn"
+            @click="approveVpnClick(vpn?.name)"
+          >
+            approve
+          </button>
+          <div v-else>-</div>
+        </template>
+      </v-table>
     </div>
     <v-modal-add-vpn
       v-if="modalCreateOpened"
@@ -60,6 +51,7 @@ import { useVpn } from "~/composables/useVpn";
 import VModalAddVpn from "~/components/modal/vpn/VModalAddVpn.vue";
 import VModalApproveVpnConfirm from "~/components/modal/vpn/VModalApproveVpnConfirm.vue";
 import { VpnStatus } from "~/api/constants";
+import VTable from "~/components/VTable.vue";
 
 definePageMeta({
   middleware: ["auth", "manager", "client"],
@@ -73,7 +65,31 @@ const {
   modalCreateOpened,
   approveVpnClick,
   modalApproveName,
+  pageNext,
+  pagePrev,
+  currentPage,
+  lastPage,
+  debouncedSearchQuery,
 } = useVpn();
+
+const headers = [
+  "id",
+  "user id",
+  "name",
+  "server addr",
+  "user email",
+  "status",
+];
+const vpnsForTable = computed(() =>
+  getVpns.value.map((vpn) => ({
+    id: vpn.id,
+    createdByUserId: vpn.createdByUserId,
+    name: vpn.name,
+    serverAddr: vpn.serverAddr,
+    forUserEmail: vpn.forUserEmail,
+    status: vpn.status,
+  }))
+);
 
 await loadVpns();
 </script>

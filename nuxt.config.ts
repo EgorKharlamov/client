@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     ["@nuxtjs/eslint-module", {}],
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "nuxt-lodash",
   ],
   pinia: {
     autoImports: [

@@ -1,9 +1,11 @@
 import { storeToRefs } from "pinia";
 import { useToast } from "vue-toastification";
+import { debounce } from "lodash-es";
 import { useServersStore } from "~/store/serversStore";
 
 export const useServer = () => {
   const serverStore = useServersStore();
+  const { getServers, getCount } = storeToRefs(serverStore);
   const modalOpened = ref(false);
   const modalDeleteConfirmOpened = ref(false);
   const serverDeleteName = ref("");
@@ -11,13 +13,33 @@ export const useServer = () => {
   const address = useState("address", () => "");
   const maxUsers = useState("maxUsers", () => 20);
   const isLoading = useState("isLoading", () => false);
+  const currentPage = useState("currentPage", () => 1);
+  const countOnPage = useState("countOnPage", () => 20);
 
   const onDeleteClickHandler = (name: string) => {
     modalDeleteConfirmOpened.value = true;
     serverDeleteName.value = name;
   };
-  const { getServers } = storeToRefs(serverStore);
   const toast = useToast();
+  const lastPage = computed(() =>
+    Math.ceil(getCount.value / countOnPage.value)
+  );
+
+  const pagePrev = async () => {
+    currentPage.value = currentPage.value - 1;
+    const params = { page: currentPage.value, count: countOnPage.value };
+    await serverStore.loadServers(params);
+  };
+  const pageNext = async () => {
+    currentPage.value = currentPage.value + 1;
+    const params = { page: currentPage.value, count: countOnPage.value };
+    await serverStore.loadServers(params);
+  };
+  const searchQuery = async (query: string) => {
+    const params = { page: currentPage.value, count: countOnPage.value, query };
+    await serverStore.loadServers(params);
+  };
+  const debouncedSearchQuery = debounce(searchQuery, 500);
 
   const loadServers = async () => {
     try {
@@ -62,5 +84,10 @@ export const useServer = () => {
     modalDeleteConfirmOpened,
     onDeleteClickHandler,
     serverDeleteName,
+    currentPage,
+    lastPage,
+    pagePrev,
+    pageNext,
+    debouncedSearchQuery,
   };
 };

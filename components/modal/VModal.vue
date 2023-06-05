@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.bg">
-    <div :class="$style.container">
-      <button type="button" :class="$style.buttonExit" @click="emit('close:x')">
+    <div ref="target" :class="$style.container">
+      <button type="button" :class="$style.buttonExit" @click="closeModal">
         <x-mark-icon :class="$style.icon" />
       </button>
       <div :class="$style.header">
@@ -11,7 +11,7 @@
         <slot />
       </div>
       <div :class="$style.footer">
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </div>
   </div>
@@ -19,13 +19,27 @@
 
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/solid";
+import { onClickOutside } from "@vueuse/core";
 
 const emit = defineEmits(["close:x"]);
+const closeModal = () => {
+  emit("close:x");
+};
+
+const target = ref(null);
+onClickOutside(target, closeModal);
+
+onMounted(() => {
+  document.querySelector("body").classList.add("modal-opened");
+});
+onBeforeUnmount(() => {
+  document.querySelector("body").classList.remove("modal-opened");
+});
 </script>
 
 <style module>
 .bg {
-  @apply flex items-center justify-center w-[100vw] h-[100vh] border fixed top-0 left-0 bg-gray-500/50;
+  @apply flex items-center justify-center w-[100vw] h-[100vh] border fixed top-0 left-0 bg-gray-500/50 overflow-hidden;
 }
 
 .container {

@@ -34,7 +34,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
-          @click="emit('close')"
+          @click="closeModal"
         >
           Cancel
         </button>
@@ -56,9 +56,10 @@ import { useVpn } from "~/composables/useVpn";
 
 const emit = defineEmits(["close"]);
 const { forUserEmail, count, prefix, isLoading, createVpn } = useVpn();
+const closeModal = () => emit("close");
 const createVpnHandler = async () => {
   await createVpn();
-  emit("close");
+  closeModal();
 };
 </script>
 <style module>
