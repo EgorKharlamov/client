@@ -11,18 +11,27 @@
         >
         <nuxt-link
           v-if="canUserLoadVpns()"
-          to="/vpn"
+          to="/vpns"
           :class="{ [$style.link]: true, [$style.linkActive]: activeRouteVpn }"
           >Vpn</nuxt-link
         >
         <nuxt-link
           v-if="canUserLoadServers()"
-          to="/server"
+          to="/servers"
           :class="{
             [$style.link]: true,
             [$style.linkActive]: activeRouteServer,
           }"
           >Servers</nuxt-link
+        >
+        <nuxt-link
+          v-if="canUserLoadUsers()"
+          to="/users"
+          :class="{
+            [$style.link]: true,
+            [$style.linkActive]: activeRouteUsers,
+          }"
+          >Users</nuxt-link
         >
       </div>
       <slot />
@@ -38,8 +47,9 @@ await userStore.loadCurrentUser();
 
 const route = useRoute();
 const activeRouteHome = computed(() => route.path === "/");
-const activeRouteServer = computed(() => route.path === "/server");
-const activeRouteVpn = computed(() => route.path === "/vpn");
+const activeRouteServer = computed(() => route.path === "/servers");
+const activeRouteVpn = computed(() => route.path === "/vpns");
+const activeRouteUsers = computed(() => route.path === "/users");
 </script>
 
 <style module>

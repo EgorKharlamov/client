@@ -15,11 +15,11 @@ class UserEndpoint {
   }
 
   getUserById(id: string) {
-    return this.withPrefix(`user/${id}`);
+    return this.withPrefix(`userById/${id}`);
   }
 
   updateUserRole(id: string) {
-    return this.withPrefix(`user/${id}`);
+    return this.withPrefix(`userById/${id}`);
   }
 
   getUserByEmail(email: string) {
@@ -32,6 +32,10 @@ class UserEndpoint {
 
   getCurrentUser(): string {
     return this.withPrefix("current");
+  }
+
+  deleteUserById(id: string) {
+    return this.withPrefix(`userById/${id}`);
   }
 }
 
