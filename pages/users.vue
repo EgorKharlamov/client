@@ -11,13 +11,22 @@
         @page:prev="pagePrev"
       >
         <template #actions="{ row: user }">
-          <button
-            type="button"
-            :class="$style.deleteBtn"
-            @click="deleteUserClick(user.id)"
-          >
-            delete
-          </button>
+          <div :class="$style.actionsContainer">
+            <button
+              type="button"
+              :class="[$style.btn, $style.deleteBtn]"
+              @click="deleteUserClick(user)"
+            >
+              delete
+            </button>
+            <button
+              type="button"
+              :class="[$style.btn, $style.updateBtn]"
+              @click="updateUserRoleClick(user)"
+            >
+              update
+            </button>
+          </div>
         </template>
       </v-table>
     </div>
@@ -27,6 +36,12 @@
       @close:x="modalApproveDeleteOpened = false"
       @close="modalApproveDeleteOpened = false"
     />
+
+    <v-modal-upate-user-role-confirm
+      v-if="modalUpdateUserRoleOpened"
+      @close:x="modalUpdateUserRoleOpened = false"
+      @close="modalUpdateUserRoleOpened = false"
+    />
   </div>
 </template>
 
@@ -34,6 +49,7 @@
 import VTable from "~/components/VTable.vue";
 import { useUsers } from "~/composables/useUsers";
 import VModalDeleteUserConfirm from "~/components/modal/users/VModalDeleteUserConfirm.vue";
+import VModalUpateUserRoleConfirm from "~/components/modal/users/VModalUpateUserRoleConfirm.vue";
 
 definePageMeta({
   middleware: ["auth", "manager", "client"],
@@ -50,14 +66,17 @@ const {
   deleteUserClick,
   loadUsers,
   currentPage,
+  modalUpdateUserRoleOpened,
+  updateUserRoleClick,
 } = useUsers();
 
-const headers = ["id", "name", "email", "phone"];
+const headers = ["id", "name", "email", "role", "phone"];
 const usersForTable = computed(() =>
   getUsers?.value.map((user) => ({
     id: user.id,
     name: user.name,
     email: user.email,
+    role: user.role,
     phone: user.phone,
   }))
 );
@@ -76,8 +95,20 @@ await loadUsers();
   @apply text-center border;
 }
 
+.actionsContainer {
+  @apply flex flex-col gap-1 py-1 px-2;
+}
+
+.btn {
+  @apply py-0.5 text-xs px-1 rounded text-white  transition;
+}
+
 .deleteBtn {
-  @apply py-0.5 text-xs px-1 rounded bg-red-500 text-white hover:bg-red-600 transition;
+  @apply bg-red-500 hover:bg-red-600;
+}
+
+.updateBtn {
+  @apply bg-green-500  hover:bg-green-600;
 }
 
 .plusIcon {

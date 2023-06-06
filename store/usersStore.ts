@@ -1,5 +1,5 @@
 import { DEFAULT_PARAMS, useApi } from "#imports";
-import { Method } from "~/api/constants";
+import { Method, UserRoles } from "~/api/constants";
 import { userEndpoint } from "~/api/endpoints/userEndpoints";
 import { UserEntity } from "~/api/types";
 
@@ -20,6 +20,11 @@ export const useUsersStore = defineStore("users", {
     },
     async deleteUserById(id: number) {
       await useApi(Method.DELETE, userEndpoint.deleteUserById(id));
+    },
+    async updateUserRoleById(id: number, role = UserRoles.Manager) {
+      await useApi(Method.PUT, userEndpoint.updateUserRole(id), {
+        body: { role },
+      });
     },
   },
 });

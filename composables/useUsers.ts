@@ -2,6 +2,7 @@ import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { debounce } from "lodash-es";
 import { useUsersStore } from "~/store/usersStore";
+import { UserRoles } from "~/api/constants";
 
 export const useUsers = () => {
   const toast = useToast();
@@ -11,10 +12,17 @@ export const useUsers = () => {
     "modalApproveDeleteOpened",
     () => false
   );
-  const userToDeleteId = useState("userToDeleteId", () => 0);
+  const modalUpdateUserRoleOpened = useState(
+    "modalUpdateUserRoleOpened",
+    () => false
+  );
+  const userToDelete = useState("userToDelete", () => {});
+  const userToUpdate = useState("userToUpdate", () => {});
   const isLoading = useState("isLoading", () => false);
   const currentPage = useState("currentPage", () => 1);
   const countOnPage = useState("countOnPage", () => 20);
+
+  const newUserRole = useState("newUserRole", () => UserRoles.Client);
 
   const lastPage = computed(() =>
     Math.ceil(getCount.value / countOnPage.value)
@@ -35,14 +43,14 @@ export const useUsers = () => {
     await usersStore.loadUsers(params);
   };
   const debouncedSearchQuery = debounce(searchQuery, 500);
-  const deleteUserClick = (id: number) => {
+  const deleteUserClick = (user: {}) => {
     modalApproveDeleteOpened.value = true;
-    userToDeleteId.value = id;
+    userToDelete.value = user;
   };
   const deleteUser = async () => {
     isLoading.value = true;
     try {
-      await usersStore.deleteUserById(userToDeleteId.value);
+      await usersStore.deleteUserById(userToDelete.value.id);
       await loadUsers();
     } catch (e) {
       toast.error(e.message);
@@ -52,6 +60,28 @@ export const useUsers = () => {
   const loadUsers = async () => {
     try {
       await usersStore.loadUsers();
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
+
+  const updateUserRoleClick = (user: {}) => {
+    modalUpdateUserRoleOpened.value = true;
+    userToUpdate.value = user;
+  };
+
+  const updateUserRole = async () => {
+    try {
+      await usersStore.updateUserRoleById(
+        userToUpdate.value.id,
+        newUserRole.value
+      );
+      toast.success(
+        `Role for user "${userToUpdate.value.name} (${userToUpdate.value.email})" updated!`
+      );
+      modalUpdateUserRoleOpened.value = false;
+      userToUpdate.value = {};
+      await loadUsers();
     } catch (e) {
       toast.error(e.message);
     }
@@ -70,6 +100,11 @@ export const useUsers = () => {
     loadUsers,
     currentPage,
     countOnPage,
-    userToDeleteId,
+    userToDelete,
+    userToUpdate,
+    newUserRole,
+    updateUserRole,
+    updateUserRoleClick,
+    modalUpdateUserRoleOpened,
   };
 };

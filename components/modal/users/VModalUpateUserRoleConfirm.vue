@@ -1,17 +1,21 @@
 <template>
   <v-modal>
-    <template #header>
-      <h3>Delete user</h3>
-    </template>
+    <template #header>Update role</template>
     <template #default>
       <div>
         <p>
-          <span>Delete user </span>
-          <b> {{ userToDelete.name }}</b>
-          (<b> {{ userToDelete.email }}</b
+          <span>Update user </span>
+          <b> {{ userToUpdate.name }}</b>
+          (<b> {{ userToUpdate.email }}</b
           >)
         </p>
-        <p>Are you sure?</p>
+        <label>
+          <span>New Role</span>
+          <select v-model="newUserRole" :class="$style.select">
+            <option :value="UserRoles.Client">Client</option>
+            <option :value="UserRoles.Manager">Manager</option>
+          </select>
+        </label>
       </div>
     </template>
     <template #footer>
@@ -25,11 +29,11 @@
         </button>
         <button
           type="button"
-          :class="[$style.button, $style.buttonDelete]"
+          :class="[$style.button, $style.buttonUpdate]"
           :disabled="isLoading"
-          @click="deleteUserHandler"
+          @click="updateUserRole"
         >
-          Delete
+          Update
         </button>
       </div>
     </template>
@@ -37,21 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
 import VModal from "~/components/modal/VModal.vue";
 import { useUsers } from "~/composables/useUsers";
+import { UserRoles } from "~/api/constants";
 
-const toast = useToast();
 const emit = defineEmits(["close"]);
-const { deleteUser, isLoading, userToDelete } = useUsers();
-const deleteUserHandler = async () => {
-  try {
-    await deleteUser();
-    emit("close");
-  } catch (e) {
-    toast.error(e.message);
-  }
-};
+const { updateUserRole, isLoading, userToUpdate, newUserRole } = useUsers();
 </script>
 
 <style module>
@@ -75,7 +70,11 @@ const deleteUserHandler = async () => {
   @apply border border-gray-500 transition;
 }
 
-.buttonDelete {
-  @apply bg-red-500 text-white hover:bg-red-600 transition;
+.buttonUpdate {
+  @apply bg-green-500 text-white hover:bg-green-600 transition;
+}
+
+.select {
+  @apply rounded py-1 ml-2;
 }
 </style>
