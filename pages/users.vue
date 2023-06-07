@@ -80,7 +80,7 @@ const {
 
 const headers = ["id", "name", "email", "role", "phone"];
 const usersForTable = computed(() =>
-  getUsers?.value.map((user) => ({
+  getUsers.value?.map((user) => ({
     id: user.id,
     name: user.name,
     email: user.email,
