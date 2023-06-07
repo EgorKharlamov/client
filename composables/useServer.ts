@@ -45,7 +45,7 @@ export const useServer = () => {
     try {
       await serverStore.loadServers();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
   };
 

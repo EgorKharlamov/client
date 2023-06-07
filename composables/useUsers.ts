@@ -53,7 +53,7 @@ export const useUsers = () => {
       await usersStore.deleteUserById(userToDelete.value.id);
       await loadUsers();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
     isLoading.value = false;
   };
@@ -61,7 +61,7 @@ export const useUsers = () => {
     try {
       await usersStore.loadUsers();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
   };
 
@@ -83,7 +83,7 @@ export const useUsers = () => {
       userToUpdate.value = {};
       await loadUsers();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
   };
 

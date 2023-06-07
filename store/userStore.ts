@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", {
   actions: {
     async loadCurrentUser() {
       this.user = await useApi(Method.GET, userEndpoint.getCurrentUser());
+      console.log("what", this.user);
     },
     logOut() {
       const auth = useCookie("auth");

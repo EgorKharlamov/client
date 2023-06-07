@@ -38,7 +38,7 @@ const approveVpnHandler = async () => {
     await approveVpn(props.name);
     emit("close");
   } catch (e) {
-    toast.error(e.message);
+    toast.error(getApiError(e));
   }
 };
 </script>

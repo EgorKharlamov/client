@@ -65,7 +65,7 @@ const createServerHandler = async () => {
     await createServer();
     emit("close");
   } catch (e) {
-    toast.error(e.message);
+    toast.error(getApiError(e));
   }
 };
 </script>

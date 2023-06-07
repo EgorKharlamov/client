@@ -38,7 +38,7 @@ const deleteServerHandler = async () => {
     await deleteServer(props.name);
     emit("close");
   } catch (e) {
-    toast.error(e.message);
+    toast.error(getApiError(e));
   }
 };
 </script>

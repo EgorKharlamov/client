@@ -49,7 +49,7 @@ const deleteUserHandler = async () => {
     await deleteUser();
     emit("close");
   } catch (e) {
-    toast.error(e.message);
+    toast.error(getApiError(e));
   }
 };
 </script>

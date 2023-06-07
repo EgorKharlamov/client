@@ -69,7 +69,7 @@ export const useVpn = () => {
       await vpnStore.loadVpns();
       clearFormCreationVpn();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
     isLoading.value = false;
   };
@@ -79,7 +79,7 @@ export const useVpn = () => {
       await vpnStore.approveVpn(name, VpnStatus.Approved);
       await vpnStore.loadVpns();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
   };
 
@@ -87,7 +87,7 @@ export const useVpn = () => {
     try {
       await vpnStore.loadVpns();
     } catch (e) {
-      toast.error(e.message);
+      toast.error(getApiError(e));
     }
   };
 
