@@ -12,20 +12,23 @@
       >
         <template #actions="{ row: user }">
           <div :class="$style.actionsContainer">
-            <button
-              type="button"
-              :class="[$style.btn, $style.deleteBtn]"
-              @click="deleteUserClick(user)"
-            >
-              delete
-            </button>
-            <button
-              type="button"
-              :class="[$style.btn, $style.updateBtn]"
-              @click="updateUserRoleClick(user)"
-            >
-              update
-            </button>
+            <div v-if="user.id === currentUser.id">Its me!</div>
+            <div v-else>
+              <button
+                type="button"
+                :class="[$style.btn, $style.deleteBtn]"
+                @click="deleteUserClick(user)"
+              >
+                delete
+              </button>
+              <button
+                type="button"
+                :class="[$style.btn, $style.updateBtn]"
+                @click="updateUserRoleClick(user)"
+              >
+                update
+              </button>
+            </div>
           </div>
         </template>
       </v-table>
@@ -46,15 +49,20 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import VTable from "~/components/VTable.vue";
 import { useUsers } from "~/composables/useUsers";
 import VModalDeleteUserConfirm from "~/components/modal/users/VModalDeleteUserConfirm.vue";
 import VModalUpateUserRoleConfirm from "~/components/modal/users/VModalUpateUserRoleConfirm.vue";
+import { useUserStore } from "~/store/userStore";
 
 definePageMeta({
   middleware: ["auth", "manager", "client"],
   layout: "tabs",
 });
+
+const userStore = useUserStore();
+const { getUser: currentUser } = storeToRefs(userStore);
 
 const {
   getUsers,

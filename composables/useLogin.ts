@@ -1,11 +1,14 @@
 import { useRouter } from "#app";
+import { useToast } from "vue-toastification";
 import { useApi } from "~/composables/useApi";
 import { Method } from "~/api/constants";
 import { Tabs } from "~/components/login/constants";
+import { userEndpoint } from "~/api/endpoints/userEndpoints";
+import { getApiError } from "~/utils/error";
 
 export const useLogin = () => {
-  const currentTab = ref(Tabs.SignUp);
-  const secondTab = ref(Tabs.SignIn);
+  const currentTab = useState("currentTab", () => Tabs.SignUp);
+  const secondTab = useState("secondTab", () => Tabs.SignIn);
   const email = ref("hellokitty@gmail.com");
   const phone = ref("79239232233");
   const pass = ref("Verystrongpassword1");
@@ -17,6 +20,7 @@ export const useLogin = () => {
   const auth = useCookie("auth");
 
   const router = useRouter();
+  const toast = useToast();
 
   const toggleTypePass = () => {
     if (typePass.value === "password") {
@@ -35,27 +39,38 @@ export const useLogin = () => {
   };
 
   const createUser = async () => {
-    await useApi(Method.POST, "/users/createUser", {
-      body: {
-        email: email.value,
-        phone: phone.value,
-        pass: pass.value,
-        passRepeat: passRepeat.value,
-        name: name.value,
-      },
-    });
+    try {
+      await useApi(Method.POST, userEndpoint.createUser(), {
+        body: {
+          email: email.value,
+          phone: phone.value,
+          pass: pass.value,
+          passRepeat: passRepeat.value,
+          name: name.value,
+        },
+      });
+      toast.success(`User created!`);
+      switchTab();
+    } catch (e: unknown) {
+      toast.error(getApiError(e));
+    }
   };
 
   const signIn = async () => {
-    const data = await useApi(Method.POST, "/users/signIn", {
-      body: {
-        email: email.value,
-        pass: pass.value,
-      },
-    });
-    if (data.value?.access_token) {
-      auth.value = data.value?.access_token;
-      router.push("/");
+    try {
+      const data = await useApi(Method.POST, userEndpoint.signIn(), {
+        body: {
+          email: email.value,
+          pass: pass.value,
+        },
+      });
+      if (data.value?.access_token) {
+        auth.value = data.value?.access_token;
+        await router.push("/");
+        switchTab();
+      }
+    } catch (e) {
+      toast.error(getApiError(e));
     }
   };
 

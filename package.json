@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "pnpm run clean && nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host 0.0.0.0",
     "generate": "nuxt generate",
     "preview": "pnpm run build && nuxt preview",
     "postinstall": "nuxt prepare",

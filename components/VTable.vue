@@ -24,7 +24,7 @@
         </td>
       </tr>
     </table>
-    <div v-if="lastPage !== 1" :class="$style.paginator">
+    <div v-if="lastPage > 1" :class="$style.paginator">
       <button
         :class="$style.button"
         :disabled="currentPage === 1"

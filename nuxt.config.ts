@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
-  ssr: false,
+  ssr: true,
   modules: [
     ["@nuxtjs/eslint-module", {}],
     "@nuxtjs/tailwindcss",
