@@ -40,10 +40,17 @@
 </template>
 
 <script setup>
+import { useToast } from "vue-toastification";
 import { useUserStore } from "~/store/userStore";
 
 const userStore = useUserStore();
-await userStore.loadCurrentUser();
+const toast = useToast();
+
+try {
+  await userStore.loadCurrentUser();
+} catch (e) {
+  toast.error(e);
+}
 
 const route = useRoute();
 const activeRouteHome = computed(() => route.path === "/");

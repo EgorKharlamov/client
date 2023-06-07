@@ -19,13 +19,13 @@ export const useApi = async (
     baseURL: config.public.baseURL,
     ...opt,
   });
-  if (error.value?.statusCode === 401) {
+  if (error?.value?.statusCode === 401) {
     auth.value = "";
     router.push("/auth");
     return;
   }
-  if (error.value) {
-    throw error.value?.data.error;
+  if (error?.value) {
+    throw error?.value?.data.error;
   }
   return data;
 };
