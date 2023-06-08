@@ -1,8 +1,9 @@
 {
-  "name": "multitool",
+  "name": "vpn_manager",
   "version": "0.1.0",
   "author": "Egor Kharlamov",
-  "description": "Multiple lit projects in one platform",
+  "type": "module",
+  "description": "VPN manager",
   "engines": {
     "node": "18.16.0",
     "pnpm": "8.5.0",

@@ -5,7 +5,7 @@
       <button type="button" @click="toggle">{{ $t("toggleLang") }}</button>
       <div v-show="userStore.getUserName">
         <span>{{ userStore.getUserName }}</span>
-        <span class="italic text-sm"> #{{ userStore.getUser.id }}</span>
+        <span class="italic text-sm"> #{{ getUser?.id }}</span>
       </div>
       <button type="button" @click="userStore.logOut">
         <arrow-right-on-rectangle-icon :class="$style.icon" />
@@ -16,10 +16,12 @@
 
 <script setup>
 import { ArrowRightOnRectangleIcon } from "@heroicons/vue/24/solid";
+import { storeToRefs } from "pinia";
 import { useUserStore } from "~/store/userStore";
 import { Locale } from "~/i18n/constants";
 
 const userStore = useUserStore();
+const { getUser } = storeToRefs(userStore);
 const cookie = useCookie("lang");
 const { locale } = useI18n();
 const toggle = () => {
