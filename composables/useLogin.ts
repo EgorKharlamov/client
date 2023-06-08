@@ -9,11 +9,11 @@ import { getApiError } from "~/utils/error";
 export const useLogin = () => {
   const currentTab = useState("currentTab", () => Tabs.SignUp);
   const secondTab = useState("secondTab", () => Tabs.SignIn);
-  const email = ref("hellokitty@gmail.com");
-  const phone = ref("79239232233");
-  const pass = ref("Verystrongpassword1");
-  const passRepeat = ref("Verystrongpassword1");
-  const name = ref("Egor");
+  const email = ref("");
+  const phone = ref("");
+  const pass = ref("");
+  const passRepeat = ref("");
+  const name = ref("");
   const typePass = ref("password");
   const typePassRepeat = ref("password");
 
