@@ -11,16 +11,16 @@ export const useVpn = () => {
   const { getVpns, getCount } = storeToRefs(vpnStore);
   const serverStore = useServersStore();
   const { getServers } = storeToRefs(serverStore);
-  const serverAddr = useState("serverAddr", () => "");
-  const forUserEmail = useState("forUserEmail", () => "");
-  const count = useState("count", () => 1);
-  const prefix = useState("prefix", () => "");
-  const modalCreateOpened = useState("modalCreateOpened", () => false);
-  const modalApproveOpened = useState("modalApproveOpened", () => false);
-  const modalApproveName = useState("modalApproveName", () => "");
-  const isLoading = useState("isLoading", () => false);
-  const currentPage = useState("currentPage", () => 1);
-  const countOnPage = useState("countOnPage", () => 20);
+  const serverAddr = ref("");
+  const forUserEmail = ref("");
+  const count = ref(1);
+  const prefix = ref("");
+  const modalCreateOpened = ref(false);
+  const modalApproveOpened = ref(false);
+  const modalApproveName = ref("");
+  const isLoading = ref(false);
+  const currentPage = ref(1);
+  const countOnPage = ref(20);
 
   const lastPage = computed(() =>
     Math.ceil(getCount.value / countOnPage.value)

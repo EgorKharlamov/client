@@ -9,12 +9,12 @@ export const useServer = () => {
   const modalOpened = ref(false);
   const modalDeleteConfirmOpened = ref(false);
   const serverDeleteName = ref("");
-  const name = useState("name", () => "");
-  const address = useState("address", () => "");
-  const maxUsers = useState("maxUsers", () => 20);
-  const isLoading = useState("isLoading", () => false);
-  const currentPage = useState("currentPage", () => 1);
-  const countOnPage = useState("countOnPage", () => 20);
+  const name = ref("");
+  const address = ref("");
+  const maxUsers = ref(20);
+  const isLoading = ref(false);
+  const currentPage = ref(1);
+  const countOnPage = ref(20);
 
   const onDeleteClickHandler = (name: string) => {
     modalDeleteConfirmOpened.value = true;
@@ -51,13 +51,17 @@ export const useServer = () => {
 
   const createServer = async () => {
     isLoading.value = true;
-    const data = {
-      name: name.value,
-      addr: address.value,
-      maxUsers: maxUsers.value,
-    };
-    await serverStore.addServer(data);
-    await serverStore.loadServers();
+    try {
+      const data = {
+        name: name.value,
+        addr: address.value,
+        maxUsers: maxUsers.value,
+      };
+      await serverStore.addServer(data);
+      await serverStore.loadServers();
+    } catch (e) {
+      toast.error(getApiError(e));
+    }
     isLoading.value = false;
   };
 

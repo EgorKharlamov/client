@@ -3,7 +3,7 @@
     <div :class="$style.filters">
       <input
         type="text"
-        placeholder="type to search"
+        :placeholder="capitalize($t('typeToSearch'))"
         :class="$style.input"
         @input="searchQuery"
       />
@@ -11,9 +11,11 @@
     <table :class="$style.table">
       <tr>
         <th v-for="(header, i) in headers" :key="i" :class="$style.cell">
-          {{ header }}
+          {{ capitalize(header) }}
         </th>
-        <th :class="$style.cell">actions</th>
+        <th :class="$style.cell">
+          {{ capitalize($t("servers.tableHeader.actions")) }}
+        </th>
       </tr>
       <tr v-for="(row, i) in rows" :key="row?.id || i" :class="$style.row">
         <td v-for="(key, j) in Object.keys(row)" :key="j" :class="$style.cell">
@@ -44,6 +46,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { capitalize } from "lodash-es";
+
 const props = defineProps<{
   headers: string[];
   rows: [];

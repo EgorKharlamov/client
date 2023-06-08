@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <h3>Text</h3>
+    <h3>{{ $t("welcome") }}</h3>
   </div>
 </template>
 

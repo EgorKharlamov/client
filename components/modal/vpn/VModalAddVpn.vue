@@ -1,6 +1,6 @@
 <template>
   <v-modal>
-    <template #header>Create new vpn</template>
+    <template #header>{{ tp("header") }}</template>
     <template #default>
       <div :class="$style.container">
         <label>
@@ -8,7 +8,7 @@
             v-model="forUserEmail"
             :class="$style.input"
             type="email"
-            placeholder="email"
+            :placeholder="tp('placeholderEmail')"
           />
         </label>
         <label>
@@ -16,7 +16,7 @@
             v-model="prefix"
             :class="$style.input"
             type="text"
-            placeholder="prefix"
+            :placeholder="tp('placeholderPrefix')"
           />
         </label>
       </div>
@@ -28,7 +28,7 @@
           :class="[$style.button, $style.buttonCancel]"
           @click="closeModal"
         >
-          Cancel
+          {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
@@ -36,18 +36,21 @@
           :disabled="isLoading"
           @click="createVpnHandler"
         >
-          Create
+          {{ tp("buttonCreate") }}
         </button>
       </div>
     </template>
   </v-modal>
 </template>
-<script setup>
+<script setup lang="ts">
+import { capitalize } from "lodash-es";
 import VModal from "~/components/modal/VModal.vue";
 import { useVpn } from "~/composables/useVpn";
 
 const emit = defineEmits(["close"]);
 const { forUserEmail, prefix, isLoading, createVpn } = useVpn();
+const { t } = useI18n();
+const tp = (field: string) => capitalize(t(`vpns.modal.add.${field}`));
 const closeModal = () => emit("close");
 const createVpnHandler = async () => {
   await createVpn();

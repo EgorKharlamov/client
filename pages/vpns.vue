@@ -6,7 +6,7 @@
       @click="modalCreateOpened = true"
     >
       <plus-icon :class="$style.plusIcon" />
-      <span class="ml-1">vpn</span>
+      <span class="ml-1">{{ $t("vpns.add") }}</span>
     </button>
     <div>
       <v-table
@@ -25,7 +25,7 @@
             :class="$style.deleteBtn"
             @click="approveVpnClick(vpn?.name)"
           >
-            approve
+            {{ $t("vpns.approve") }}
           </button>
           <div v-else>-</div>
         </template>
@@ -45,18 +45,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/24/solid";
+import { capitalize } from "lodash-es";
 import { useVpn } from "~/composables/useVpn";
 import VModalAddVpn from "~/components/modal/vpn/VModalAddVpn.vue";
 import VModalApproveVpnConfirm from "~/components/modal/vpn/VModalApproveVpnConfirm.vue";
 import { VpnStatus } from "~/api/constants";
 import VTable from "~/components/VTable.vue";
+import { useUserStore } from "~/store/userStore";
 
 definePageMeta({
-  middleware: ["auth", "manager", "client"],
+  middleware: ["auth", "client"],
   layout: "tabs",
 });
+
+const { isItMe } = useUserStore();
 
 const {
   loadVpns,
@@ -72,18 +76,23 @@ const {
   debouncedSearchQuery,
 } = useVpn();
 
-const headers = [
-  "id",
-  "user id",
-  "name",
-  "server addr",
-  "user email",
-  "status",
-];
+const { t } = useI18n();
+const createByUserId = (id: number) => {
+  if (isItMe(id)) return capitalize(t("vpns.tableBodyCellCreator"));
+  return id;
+};
+const headers = computed(() => [
+  t("vpns.tableHeaders.id"),
+  t("vpns.tableHeaders.userId"),
+  t("vpns.tableHeaders.name"),
+  t("vpns.tableHeaders.serverAddr"),
+  t("vpns.tableHeaders.userEmail"),
+  t("vpns.tableHeaders.status"),
+]);
 const vpnsForTable = computed(() =>
   getVpns.value.map((vpn) => ({
     id: vpn.id,
-    createdByUserId: vpn.createdByUserId,
+    createdByUserId: createByUserId(vpn.createdByUserId),
     name: vpn.name,
     serverAddr: vpn.serverAddr,
     forUserEmail: vpn.forUserEmail,

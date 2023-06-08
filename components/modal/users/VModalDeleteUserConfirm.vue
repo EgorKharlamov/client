@@ -1,17 +1,17 @@
 <template>
   <v-modal>
     <template #header>
-      <h3>Delete user</h3>
+      <h3>{{ tp("header") }}</h3>
     </template>
     <template #default>
       <div>
         <p>
-          <span>Delete user </span>
+          <span>{{ tp("deleteUser") }}&nbsp;</span>
           <b> {{ userToDelete.name }}</b>
           (<b> {{ userToDelete.email }}</b
           >)
         </p>
-        <p>Are you sure?</p>
+        <p>{{ tp("areYouSure") }}</p>
       </div>
     </template>
     <template #footer>
@@ -21,7 +21,7 @@
           :class="[$style.button, $style.buttonCancel]"
           @click="emit('close')"
         >
-          Cancel
+          {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
@@ -29,7 +29,7 @@
           :disabled="isLoading"
           @click="deleteUserHandler"
         >
-          Delete
+          {{ tp("buttonDelete") }}
         </button>
       </div>
     </template>
@@ -38,10 +38,13 @@
 
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
+import { capitalize } from "lodash-es";
 import VModal from "~/components/modal/VModal.vue";
 import { useUsers } from "~/composables/useUsers";
 
 const toast = useToast();
+const { t } = useI18n();
+const tp = (prefix: string) => capitalize(t(`users.modal.delete.${prefix}`));
 const emit = defineEmits(["close"]);
 const { deleteUser, isLoading, userToDelete } = useUsers();
 const deleteUserHandler = async () => {

@@ -39,7 +39,7 @@
     ><input v-model="name" type="text" placeholder="name"
   /></label>
   <button type="button" :class="$style.button" @click="createUser">
-    Создать
+    {{ $t("signUpAction") }}
   </button>
 </template>
 

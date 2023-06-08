@@ -7,13 +7,13 @@
         class="flex flex-col gap-1 justify-center align-middle items-center p-5"
       >
         <div class="relative w-full items-center justify-center text-center">
-          <h1 class="p-3 capitalize text-3xl">{{ currentTab }}</h1>
+          <h1 class="p-3 capitalize text-3xl">{{ $t(currentTab) }}</h1>
           <button
             type="button"
             class="p-2 absolute -right-2 top-4"
             @click="switchTab"
           >
-            {{ secondTab }}
+            {{ $t(secondTab) }}
           </button>
         </div>
         <transition name="fade">

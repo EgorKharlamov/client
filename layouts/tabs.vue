@@ -7,13 +7,13 @@
           v-if="canUserLoadServers() || canUserLoadVpns()"
           to="/"
           :class="{ [$style.link]: true, [$style.linkActive]: activeRouteHome }"
-          >Home</nuxt-link
+          >{{ $t("layout.tabs.home") }}</nuxt-link
         >
         <nuxt-link
           v-if="canUserLoadVpns()"
           to="/vpns"
           :class="{ [$style.link]: true, [$style.linkActive]: activeRouteVpn }"
-          >Vpn</nuxt-link
+          >{{ $t("layout.tabs.vpn") }}</nuxt-link
         >
         <nuxt-link
           v-if="canUserLoadServers()"
@@ -22,7 +22,7 @@
             [$style.link]: true,
             [$style.linkActive]: activeRouteServer,
           }"
-          >Servers</nuxt-link
+          >{{ $t("layout.tabs.servers") }}</nuxt-link
         >
         <nuxt-link
           v-if="canUserLoadUsers()"
@@ -31,7 +31,7 @@
             [$style.link]: true,
             [$style.linkActive]: activeRouteUsers,
           }"
-          >Users</nuxt-link
+          >{{ $t("layout.tabs.users") }}</nuxt-link
         >
       </div>
       <slot />

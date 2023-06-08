@@ -1,6 +1,6 @@
 <template>
   <v-modal>
-    <template #header>Create new server</template>
+    <template #header>{{ tp("header") }}</template>
     <template #default>
       <div :class="$style.container">
         <label>
@@ -8,7 +8,7 @@
             v-model="name"
             :class="$style.input"
             type="text"
-            placeholder="name"
+            :placeholder="tp('placeholderName')"
           />
         </label>
         <label>
@@ -16,7 +16,7 @@
             v-model="address"
             :class="$style.input"
             type="text"
-            placeholder="address"
+            :placeholder="tp('placeholderAddress')"
           />
         </label>
         <label>
@@ -24,7 +24,7 @@
             v-model="maxUsers"
             :class="$style.input"
             type="number"
-            placeholder="maximum users"
+            :placeholder="tp('placeholderMaxUsers')"
           />
         </label>
       </div>
@@ -36,7 +36,7 @@
           :class="[$style.button, $style.buttonCancel]"
           @click="emit('close')"
         >
-          Cancel
+          {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
@@ -44,29 +44,26 @@
           :disabled="isLoading"
           @click="createServerHandler"
         >
-          Create
+          {{ tp("buttonCreate") }}
         </button>
       </div>
     </template>
   </v-modal>
 </template>
 
-<script setup>
-import { useToast } from "vue-toastification";
+<script setup lang="ts">
+import { capitalize } from "lodash-es";
 import VModal from "~/components/modal/VModal.vue";
 import { useServer } from "~/composables/useServer";
 
-const toast = useToast();
 const emit = defineEmits(["close"]);
+const { t } = useI18n();
+const tp = (field: string) => capitalize(t(`servers.modal.add.${field}`));
 const { name, address, maxUsers, createServer, isLoading } = useServer();
 
 const createServerHandler = async () => {
-  try {
-    await createServer();
-    emit("close");
-  } catch (e) {
-    toast.error(getApiError(e));
-  }
+  await createServer();
+  emit("close");
 };
 </script>
 

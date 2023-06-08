@@ -9,7 +9,11 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "nuxt-lodash",
+    "@nuxtjs/i18n",
   ],
+  i18n: {
+    vueI18n: "./i18n.config.ts", // if you are using custom path, default
+  },
   pinia: {
     autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
   },

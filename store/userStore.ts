@@ -22,5 +22,8 @@ export const useUserStore = defineStore("user", {
       auth.value = "";
       router.push("/auth");
     },
+    isItMe(id: number) {
+      return this.user?.id === id;
+    },
   },
 });

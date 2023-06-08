@@ -1,7 +1,7 @@
 <template>
   <v-modal>
-    <template #header>Approve vpn</template>
-    <template #default>Are you sure?</template>
+    <template #header>{{ tp("header") }}</template>
+    <template #default>{{ tp("body") }}</template>
     <template #footer>
       <div :class="$style.containerBtns">
         <button
@@ -9,7 +9,7 @@
           :class="[$style.button, $style.buttonCancel]"
           @click="emit('close')"
         >
-          Cancel
+          {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
@@ -17,7 +17,7 @@
           :disabled="isLoading"
           @click="approveVpnHandler"
         >
-          Approve
+          {{ tp("buttonApprove") }}
         </button>
       </div>
     </template>
@@ -26,10 +26,13 @@
 
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
+import { capitalize } from "lodash-es";
 import VModal from "~/components/modal/VModal.vue";
 import { useVpn } from "~/composables/useVpn";
 
 const toast = useToast();
+const { t } = useI18n();
+const tp = (field: string) => capitalize(t(`vpns.modal.approve.${field}`));
 const emit = defineEmits(["close"]);
 const props = defineProps<{ name: string }>();
 const { approveVpn, isLoading } = useVpn();

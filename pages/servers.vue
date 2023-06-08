@@ -6,7 +6,7 @@
       @click="modalOpened = true"
     >
       <plus-icon :class="$style.plusIcon" />
-      <span class="ml-1">server</span>
+      <span class="ml-1">{{ $t("servers.add") }}</span>
     </button>
     <div>
       <v-table
@@ -24,7 +24,7 @@
             :class="$style.deleteBtn"
             @click="onDeleteClickHandler(server.name)"
           >
-            delete
+            {{ $t("servers.delete") }}
           </button>
         </template>
       </v-table>
@@ -55,6 +55,8 @@ definePageMeta({
   layout: "tabs",
 });
 
+const { t } = useI18n();
+
 const {
   loadServers,
   modalOpened,
@@ -69,7 +71,13 @@ const {
   debouncedSearchQuery,
 } = useServer();
 
-const headers = ["id", "name", "address", "maximum users", "available slots"];
+const headers = computed(() => [
+  t("servers.tableHeader.id"),
+  t("servers.tableHeader.name"),
+  t("servers.tableHeader.address"),
+  t("servers.tableHeader.maxUsers"),
+  t("servers.tableHeader.availableSlots"),
+]);
 
 const serversForTable = computed(() =>
   getServers.value.map((server) => ({

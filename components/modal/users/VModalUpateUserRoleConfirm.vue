@@ -1,16 +1,16 @@
 <template>
   <v-modal>
-    <template #header>Update role</template>
+    <template #header>{{ tp("header") }}</template>
     <template #default>
       <div>
         <p>
-          <span>Update user </span>
-          <b> {{ userToUpdate.name }}</b>
-          (<b> {{ userToUpdate.email }}</b
+          <span>{{ tp("updateUser") }}</span>
+          <b>&nbsp;{{ userToUpdate.name }}</b>
+          (<b>&nbsp;{{ userToUpdate.email }}</b
           >)
         </p>
         <label>
-          <span>New Role</span>
+          <span>{{ tp("newRole") }}</span>
           <select v-model="newUserRole" :class="$style.select">
             <option :value="UserRoles.Client">Client</option>
             <option :value="UserRoles.Manager">Manager</option>
@@ -25,7 +25,7 @@
           :class="[$style.button, $style.buttonCancel]"
           @click="emit('close')"
         >
-          Cancel
+          {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
@@ -33,7 +33,7 @@
           :disabled="isLoading"
           @click="updateUserRole"
         >
-          Update
+          {{ tp("buttonUpdate") }}
         </button>
       </div>
     </template>
@@ -41,11 +41,14 @@
 </template>
 
 <script setup lang="ts">
+import { capitalize } from "lodash-es";
 import VModal from "~/components/modal/VModal.vue";
 import { useUsers } from "~/composables/useUsers";
 import { UserRoles } from "~/api/constants";
 
 const emit = defineEmits(["close"]);
+const { t } = useI18n();
+const tp = (field: string) => capitalize(t(`users.modal.update.${field}`));
 const { updateUserRole, isLoading, userToUpdate, newUserRole } = useUsers();
 </script>
 

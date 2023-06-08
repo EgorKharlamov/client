@@ -1,0 +1,102 @@
+export const en = {
+  welcome: "Welcome!",
+  typeToSearch: "type to search...",
+  toggleLang: "🇺🇸",
+  vpn: "VPN",
+  signUp: "Sign Up",
+  signIn: "Sign In",
+  signInAction: "Let's go",
+  signUpAction: "Create",
+  layout: {
+    tabs: {
+      home: "Home",
+      vpn: "Vpn",
+      servers: "Servers",
+      users: "Users",
+    },
+  },
+  servers: {
+    add: "server",
+    delete: "delete",
+    modal: {
+      add: {
+        header: "create new server",
+        placeholderName: "name",
+        placeholderAddress: "address",
+        placeholderMaxUsers: "maximum users",
+        buttonCancel: "cancel",
+        buttonCreate: "create",
+      },
+      delete: {
+        header: "delete server",
+        body: "are you sure?",
+        buttonCancel: "cancel",
+        buttonDelete: "delete",
+      },
+    },
+    tableHeader: {
+      id: "id",
+      name: "name",
+      address: "address",
+      maxUsers: "maximum users",
+      availableSlots: "available slots",
+      actions: "actions",
+    },
+  },
+  vpns: {
+    add: "vpn",
+    approve: "approve",
+    modal: {
+      add: {
+        header: "create new vpn",
+        placeholderEmail: "email",
+        placeholderPrefix: "prefix",
+        buttonCancel: "cancel",
+        buttonCreate: "create",
+      },
+      approve: {
+        header: "approve vpn",
+        body: "are you sure?",
+        buttonCancel: "cancel",
+        buttonApprove: "approve",
+      },
+    },
+    tableHeaders: {
+      id: "id",
+      userId: "creator",
+      name: "name",
+      serverAddr: "server address",
+      userEmail: "user email",
+      status: "status",
+    },
+    tableBodyCellCreator: "me",
+  },
+  users: {
+    itsMe: "it's me!",
+    buttonDelete: "delete",
+    buttonUpdate: "update",
+    modal: {
+      update: {
+        header: "update role",
+        updateUser: "update user",
+        newRole: "new role",
+        buttonCancel: "cancel",
+        buttonUpdate: "update",
+      },
+      delete: {
+        header: "delete user",
+        deleteUser: "delete user",
+        areYouSure: "are you sure?",
+        buttonCancel: "cancel",
+        buttonDelete: "delete",
+      },
+    },
+    tableHeader: {
+      id: "id",
+      name: "name",
+      email: "email",
+      role: "role",
+      phone: "phone",
+    },
+  },
+};

@@ -1,4 +1,4 @@
 export enum Tabs {
-  SignUp = "Регистрация",
-  SignIn = "Авторизация",
+  SignUp = "signUp",
+  SignIn = "signIn",
 }

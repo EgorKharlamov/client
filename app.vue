@@ -6,7 +6,11 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { locale } = useI18n();
+const cookie = useCookie("lang");
+if (cookie?.value) locale.value = cookie.value;
+</script>
 <style>
 @import "assets/css/tailwind.css";
 

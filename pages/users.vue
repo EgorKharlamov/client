@@ -12,21 +12,23 @@
       >
         <template #actions="{ row: user }">
           <div :class="$style.actionsContainer">
-            <div v-if="user.id === currentUser.id">Its me!</div>
+            <div v-if="user.id === currentUser.id">
+              {{ capitalize($t("users.itsMe")) }}
+            </div>
             <div v-else>
               <button
                 type="button"
                 :class="[$style.btn, $style.deleteBtn]"
                 @click="deleteUserClick(user)"
               >
-                delete
+                {{ $t("users.buttonDelete") }}
               </button>
               <button
                 type="button"
                 :class="[$style.btn, $style.updateBtn]"
                 @click="updateUserRoleClick(user)"
               >
-                update
+                {{ $t("users.buttonUpdate") }}
               </button>
             </div>
           </div>
@@ -50,6 +52,7 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
+import { capitalize } from "lodash-es";
 import VTable from "~/components/VTable.vue";
 import { useUsers } from "~/composables/useUsers";
 import VModalDeleteUserConfirm from "~/components/modal/users/VModalDeleteUserConfirm.vue";
@@ -78,7 +81,15 @@ const {
   updateUserRoleClick,
 } = useUsers();
 
-const headers = ["id", "name", "email", "role", "phone"];
+const { t } = useI18n();
+
+const headers = computed(() => [
+  t("users.tableHeader.id"),
+  t("users.tableHeader.name"),
+  t("users.tableHeader.email"),
+  t("users.tableHeader.role"),
+  t("users.tableHeader.phone"),
+]);
 const usersForTable = computed(() =>
   getUsers.value?.map((user) => ({
     id: user.id,

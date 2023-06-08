@@ -9,7 +9,9 @@
       <eye-slash-icon v-if="typePass === 'text'" :class="$style.eyeIcon" />
     </button>
   </label>
-  <button type="button" :class="$style.button" @click="signIn">Войти</button>
+  <button type="button" :class="$style.button" @click="signIn">
+    {{ $t("signInAction") }}
+  </button>
 </template>
 
 <script setup>
