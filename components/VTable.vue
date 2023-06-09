@@ -48,6 +48,10 @@
 <script setup lang="ts">
 import { capitalize } from "lodash-es";
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const props = defineProps<{
   headers: string[];
   rows: [];

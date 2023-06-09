@@ -43,21 +43,21 @@ onBeforeUnmount(() => {
 }
 
 .container {
-  @apply rounded min-w-[500px] min-h-[200px] bg-gray-100 relative flex flex-col justify-between py-2 px-3;
+  @apply rounded sm:min-w-[500px] min-h-[200px] bg-gray-100 relative flex flex-col justify-between py-2 px-3;
 }
 
 .buttonExit {
-  @apply absolute right-0 top-0 p-1.5;
+  @apply absolute right-0 top-0 p-1.5 select-none;
 }
 
 .icon {
-  @apply w-[20px] h-[20px];
+  @apply w-[20px] h-[20px] select-none;
 }
 
 .header,
 .footer,
 .body {
-  @apply p-1.5;
+  @apply p-1.5 select-none;
 }
 
 .footer {

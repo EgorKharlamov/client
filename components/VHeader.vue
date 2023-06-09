@@ -41,7 +41,7 @@ const toggle = () => {
 
 <style module>
 .container {
-  @apply bg-blue-300 flex justify-between p-3;
+  @apply bg-blue-300 flex justify-between p-3 select-none;
 }
 
 .rightBlock {

@@ -1,12 +1,27 @@
 <template>
   <label :class="$style.label">
-    <input v-model="email" type="email" class="w-full" placeholder="email" />
+    <input
+      v-model="email"
+      type="email"
+      :class="$style.input"
+      placeholder="email"
+    />
   </label>
   <label :class="$style.label">
-    <input v-model="phone" type="text" placeholder="phone"
+    <input
+      v-model="phone"
+      type="text"
+      :class="$style.input"
+      placeholder="phone"
   /></label>
   <label :class="$style.label">
-    <input v-model="pass" :type="typePass" placeholder="password" />
+    <input
+      v-model="pass"
+      :type="typePass"
+      :class="$style.input"
+      placeholder="password"
+    />
+
     <button
       type="button"
       :class="$style.buttonEye"
@@ -21,6 +36,7 @@
     <input
       v-model="passRepeat"
       :type="typePassRepeat"
+      :class="$style.input"
       placeholder="repeat password"
     />
     <button
@@ -35,9 +51,14 @@
       />
     </button>
   </label>
-  <label :class="$style.label"
-    ><input v-model="name" type="text" placeholder="name"
-  /></label>
+  <label :class="$style.label">
+    <input
+      v-model="name"
+      type="text"
+      placeholder="name"
+      :class="$style.input"
+    />
+  </label>
   <button type="button" :class="$style.button" @click="createUser">
     {{ $t("signUpAction") }}
   </button>
@@ -63,18 +84,22 @@ const {
 
 <style module>
 .label {
-  @apply relative;
+  @apply relative select-none;
 }
 
 .buttonEye {
-  @apply absolute p-[10px] top-[2px] right-0;
+  @apply absolute p-[10px] top-[2px] right-0 select-none;
 }
 
 .button {
-  @apply bg-blue-500 px-2.5 py-1.5 rounded text-white mt-4;
+  @apply bg-blue-500 px-2.5 py-1.5 rounded text-white mt-4 select-none;
 }
 
 .eyeIcon {
-  @apply h-[20px];
+  @apply h-[20px] select-none;
+}
+
+.input {
+  @apply w-full rounded border border-blue-300;
 }
 </style>

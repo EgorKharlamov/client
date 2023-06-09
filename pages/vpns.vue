@@ -10,6 +10,7 @@
     </button>
     <div>
       <v-table
+        v-if="width >= 640"
         :headers="headers"
         :rows="vpnsForTable"
         :current-page="currentPage"
@@ -22,7 +23,7 @@
           <button
             v-if="vpn?.status !== VpnStatus.Approved"
             type="button"
-            :class="$style.deleteBtn"
+            :class="$style.approveBtn"
             @click="approveVpnClick(vpn?.name)"
           >
             {{ $t("vpns.approve") }}
@@ -30,6 +31,27 @@
           <div v-else>-</div>
         </template>
       </v-table>
+
+      <v-mobile-table-vpn
+        :class="$style.mobileTable"
+        :rows="vpnsForTableMobile"
+        :current-page="currentPage"
+        :last-page="lastPage"
+        @search="debouncedSearchQuery"
+        @page:next="pageNext"
+        @page:prev="pagePrev"
+      >
+        <template #actions="{ row: vpn }">
+          <button
+            v-if="vpn?.status !== VpnStatus.Approved"
+            type="button"
+            :class="$style.approveBtnMobile"
+            @click="approveVpnClick(vpn?.name)"
+          >
+            {{ $t("vpns.approve") }}
+          </button>
+        </template>
+      </v-mobile-table-vpn>
     </div>
     <v-modal-add-vpn
       v-if="modalCreateOpened"
@@ -48,6 +70,7 @@
 <script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/24/solid";
 import { capitalize } from "lodash-es";
+import { useWindowSize } from "@vueuse/core";
 import { useVpn } from "~/composables/useVpn";
 import VModalAddVpn from "~/components/modal/vpn/VModalAddVpn.vue";
 import VModalApproveVpnConfirm from "~/components/modal/vpn/VModalApproveVpnConfirm.vue";
@@ -59,6 +82,12 @@ definePageMeta({
   middleware: ["auth", "client"],
   layout: "tabs",
 });
+
+defineOptions({
+  inheritAttrs: false,
+});
+
+const { width } = useWindowSize();
 
 const { isItMe } = useUserStore();
 
@@ -100,12 +129,20 @@ const vpnsForTable = computed(() =>
   }))
 );
 
+const vpnsForTableMobile = computed(() =>
+  getVpns.value.map((vpn) => ({
+    name: vpn.name,
+    forUserEmail: vpn.forUserEmail,
+    status: vpn.status,
+  }))
+);
+
 await loadVpns();
 </script>
 
 <style module>
-.table {
-  @apply table-auto w-full mt-2;
+.mobileTable {
+  @apply table-auto w-full mt-2 sm:hidden;
 }
 .row:hover td {
   @apply bg-gray-200;
@@ -114,8 +151,12 @@ await loadVpns();
   @apply text-center border;
 }
 
-.deleteBtn {
+.approveBtn {
   @apply py-0.5 text-xs px-1 rounded bg-green-500 text-white hover:bg-green-600 transition;
+}
+
+.approveBtnMobile {
+  @apply py-2 text-base px-3 rounded bg-green-500 text-white hover:bg-green-600 transition;
 }
 
 .plusIcon {

@@ -2,7 +2,7 @@ export const ru = {
   welcome: "Добро пожаловать!",
   typeToSearch: "Что ищем?",
   toggleLang: "🇷🇺",
-  vpn: "ВПН",
+  vpn: "Спикизи ВПН",
   signUp: "Регистрация",
   signInAction: "Войти",
   signUpAction: "Создать",

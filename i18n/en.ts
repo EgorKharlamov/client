@@ -2,7 +2,7 @@ export const en = {
   welcome: "Welcome!",
   typeToSearch: "type to search...",
   toggleLang: "🇺🇸",
-  vpn: "VPN",
+  vpn: "Speakeasy VPN",
   signUp: "Sign Up",
   signIn: "Sign In",
   signInAction: "Let's go",

@@ -6,6 +6,7 @@
         <label>
           <input
             v-model="forUserEmail"
+            v-focus
             :class="$style.input"
             type="email"
             :placeholder="tp('placeholderEmail')"

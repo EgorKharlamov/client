@@ -68,6 +68,6 @@ const approveVpnHandler = async () => {
 }
 
 .buttonCreate {
-  @apply bg-red-500 text-white hover:bg-red-600 transition;
+  @apply bg-green-500 text-white hover:bg-green-600 transition;
 }
 </style>

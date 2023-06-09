@@ -2,15 +2,21 @@
   <div
     class="flex flex-col items-center align-middle justify-center h-[100vh] bg-gray-100"
   >
-    <div class="w-[500px] border-2 rounded border-gray-400 bg-gray-50">
+    <div
+      class="w-full sm:max-w-[500px] rounded border-gray-400 bg-gray-50 sm:border-2"
+    >
       <form
         class="flex flex-col gap-1 justify-center align-middle items-center p-5"
       >
-        <div class="relative w-full items-center justify-center text-center">
-          <h1 class="p-3 capitalize text-3xl">{{ $t(currentTab) }}</h1>
+        <div
+          class="relative w-full items-center justify-center text-center flex flex-col-reverse"
+        >
+          <h1 class="p-3 capitalize text-3xl select-none text-gray-800">
+            {{ $t(currentTab) }}
+          </h1>
           <button
             type="button"
-            class="p-2 absolute -right-2 top-4"
+            class="p-2 sm:absolute -right-2 top-5 bg-blue-300 hover:bg-blue-400 rounded text-white py-0.5 px-1 select-none"
             @click="switchTab"
           >
             {{ $t(secondTab) }}
