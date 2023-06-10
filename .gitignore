@@ -8,5 +8,5 @@ node_modules
 .DS_Store
 dist
 .idea
-.env
+.env.local
 .eslintcache

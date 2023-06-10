@@ -5,30 +5,47 @@
         type="text"
         :placeholder="capitalize($t('typeToSearch'))"
         :class="$style.input"
+        class="dark:bg-gray-800"
         @input="searchQuery"
       />
     </div>
-    <table :class="$style.table">
+    <table class="darkTable" :class="$style.table">
       <tr>
-        <th v-for="(header, i) in headers" :key="i" :class="$style.cell">
+        <th
+          v-for="(header, i) in headers"
+          :key="i"
+          :class="$style.cell"
+          class="darkCell"
+        >
           {{ capitalize(header) }}
         </th>
-        <th :class="$style.cell">
+        <th :class="$style.cell" class="darkCell">
           {{ capitalize($t("servers.tableHeader.actions")) }}
         </th>
       </tr>
-      <tr v-for="(row, i) in rows" :key="row?.id || i" :class="$style.row">
-        <td v-for="(key, j) in Object.keys(row)" :key="j" :class="$style.cell">
+      <tr
+        v-for="(row, i) in rows"
+        :key="row?.id || i"
+        :class="$style.row"
+        class="darkRow"
+      >
+        <td
+          v-for="(key, j) in Object.keys(row)"
+          :key="j"
+          :class="$style.cell"
+          class="darkCell"
+        >
           {{ row[key] }}
         </td>
-        <td :class="$style.cell">
+        <td :class="$style.cell" class="darkCell">
           <slot name="actions" :row="row" />
         </td>
       </tr>
     </table>
-    <div v-if="lastPage > 1" :class="$style.paginator">
+    <div v-if="lastPage > 1" :class="$style.paginator" class="darkPaginator">
       <button
         :class="$style.button"
+        class="darkBtn"
         :disabled="currentPage === 1"
         @click="clickPrev"
       >
@@ -37,6 +54,7 @@
       <div :class="$style.pages">{{ props.currentPage }}</div>
       <button
         :class="$style.button"
+        class="darkBtn"
         :disabled="currentPage === lastPage"
         @click="clickNext"
       >
@@ -66,6 +84,24 @@ const searchQuery = (e) => emit("search", e.target.value);
 
 const headers = computed(() => props.headers);
 </script>
+
+<style scoped>
+.darkTable {
+  @apply dark:text-gray-400 dark:bg-gray-800;
+}
+.darkCell {
+  @apply dark:border-gray-600;
+}
+.darkPaginator {
+  @apply dark:text-gray-300;
+}
+.darkBtn {
+  @apply dark:text-gray-300 dark:bg-gray-800 dark:disabled:bg-gray-600;
+}
+.darkRow:hover td {
+  @apply dark:bg-gray-900;
+}
+</style>
 
 <style module>
 .container {

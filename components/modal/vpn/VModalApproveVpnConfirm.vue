@@ -7,6 +7,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="buttonCancelDark"
           @click="emit('close')"
         >
           {{ tp("buttonCancel") }}
@@ -14,6 +15,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCreate]"
+          class="buttonCreateDark"
           :disabled="isLoading"
           @click="approveVpnHandler"
         >
@@ -46,6 +48,15 @@ const approveVpnHandler = async () => {
 };
 </script>
 
+<style scoped>
+.buttonCancelDark {
+  @apply dark:bg-gray-800 dark:hover:bg-gray-600 dark:border-none;
+}
+
+.buttonCreateDark {
+  @apply dark:bg-green-800 dark:text-gray-200 dark:hover:bg-green-700;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;

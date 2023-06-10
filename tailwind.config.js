@@ -3,6 +3,7 @@ import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./assets/**/*.{vue,js,css}",
     "./components/**/*.{vue,js}",

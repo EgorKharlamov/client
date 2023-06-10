@@ -19,6 +19,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="darkButtonCancel"
           @click="emit('close')"
         >
           {{ tp("buttonCancel") }}
@@ -26,6 +27,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonDelete]"
+          class="buttonDeleteDark"
           :disabled="isLoading"
           @click="deleteUserHandler"
         >
@@ -57,6 +59,14 @@ const deleteUserHandler = async () => {
 };
 </script>
 
+<style scoped>
+.buttonDeleteDark {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+.darkButtonCancel {
+  @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:border-none;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;

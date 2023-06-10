@@ -4,6 +4,7 @@
       v-model="email"
       type="email"
       :class="$style.input"
+      class="darkInput"
       placeholder="email"
     />
   </label>
@@ -12,6 +13,7 @@
       v-model="phone"
       type="text"
       :class="$style.input"
+      class="darkInput"
       placeholder="phone"
   /></label>
   <label :class="$style.label">
@@ -19,6 +21,7 @@
       v-model="pass"
       :type="typePass"
       :class="$style.input"
+      class="darkInput"
       placeholder="password"
     />
 
@@ -28,14 +31,23 @@
       class="relative"
       @click="toggleTypePass"
     >
-      <eye-icon v-if="typePass === 'password'" :class="$style.eyeIcon" />
-      <eye-slash-icon v-if="typePass === 'text'" :class="$style.eyeIcon" />
+      <eye-icon
+        v-if="typePass === 'password'"
+        :class="$style.eyeIcon"
+        class="darkEye"
+      />
+      <eye-slash-icon
+        v-if="typePass === 'text'"
+        :class="$style.eyeIcon"
+        class="darkEye"
+      />
     </button>
   </label>
   <label :class="$style.label">
     <input
       v-model="passRepeat"
       :type="typePassRepeat"
+      class="darkInput"
       :class="$style.input"
       placeholder="repeat password"
     />
@@ -44,10 +56,15 @@
       :class="$style.buttonEye"
       @click="toggleTypePassRepeat"
     >
-      <eye-icon v-if="typePassRepeat === 'password'" :class="$style.eyeIcon" />
+      <eye-icon
+        v-if="typePassRepeat === 'password'"
+        :class="$style.eyeIcon"
+        class="darkEye"
+      />
       <eye-slash-icon
         v-if="typePassRepeat === 'text'"
         :class="$style.eyeIcon"
+        class="darkEye"
       />
     </button>
   </label>
@@ -57,9 +74,15 @@
       type="text"
       placeholder="name"
       :class="$style.input"
+      class="darkInput"
     />
   </label>
-  <button type="button" :class="$style.button" @click="createUser">
+  <button
+    type="button"
+    :class="$style.button"
+    class="darkBtn"
+    @click="createUser"
+  >
     {{ $t("signUpAction") }}
   </button>
 </template>
@@ -81,6 +104,18 @@ const {
   name,
 } = useLogin();
 </script>
+
+<style scoped>
+.darkInput {
+  @apply dark:bg-gray-600 dark:text-gray-300 dark:border-gray-400 dark:focus:ring-gray-800;
+}
+.darkEye {
+  @apply dark:text-gray-800;
+}
+.darkBtn {
+  @apply dark:bg-gray-800;
+}
+</style>
 
 <style module>
 .label {

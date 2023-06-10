@@ -2,7 +2,7 @@
   <div class="mt-5 flex flex-col">
     <button
       type="button"
-      class="px-2 py-1 bg-blue-400 rounded text-white self-end flex items-center"
+      class="px-2 py-1 bg-blue-400 rounded text-white self-end flex items-center dark:bg-gray-900 dark:hover:bg-gray-800 transition"
       @click="modalOpened = true"
     >
       <plus-icon :class="$style.plusIcon" />
@@ -22,6 +22,7 @@
           <button
             type="button"
             :class="$style.deleteBtn"
+            class="darkDeleteBtn"
             @click="onDeleteClickHandler(server.name)"
           >
             {{ $t("servers.delete") }}
@@ -92,6 +93,11 @@ const serversForTable = computed(() =>
 await loadServers();
 </script>
 
+<style scoped>
+.darkDeleteBtn {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+</style>
 <style module>
 .table {
   @apply table-auto w-full mt-2;

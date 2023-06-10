@@ -11,7 +11,11 @@
         </p>
         <label>
           <span>{{ tp("newRole") }}</span>
-          <select v-model="newUserRole" :class="$style.select">
+          <select
+            v-model="newUserRole"
+            :class="$style.select"
+            class="dark:text-gray-900"
+          >
             <option :value="UserRoles.Client">Client</option>
             <option :value="UserRoles.Manager">Manager</option>
           </select>
@@ -23,6 +27,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="darkButtonCancel"
           @click="emit('close')"
         >
           {{ tp("buttonCancel") }}
@@ -30,6 +35,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonUpdate]"
+          class="buttonUpdateDark"
           :disabled="isLoading"
           @click="updateUserRole"
         >
@@ -52,6 +58,14 @@ const tp = (field: string) => capitalize(t(`users.modal.update.${field}`));
 const { updateUserRole, isLoading, userToUpdate, newUserRole } = useUsers();
 </script>
 
+<style scoped>
+.buttonUpdateDark {
+  @apply dark:bg-green-900 dark:hover:bg-green-800;
+}
+.darkButtonCancel {
+  @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:border-none;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;

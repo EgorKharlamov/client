@@ -1,7 +1,12 @@
 <template>
   <div :class="$style.container">
     <table :class="$style.table">
-      <tr v-for="(row, i) in rows" :key="row?.id || i" :class="$style.row">
+      <tr
+        v-for="(row, i) in rows"
+        :key="row?.id || i"
+        :class="$style.row"
+        class="rowDark"
+      >
         <td :class="$style.cell">
           <div :class="$style.cellName">
             <span
@@ -11,6 +16,10 @@
                 [$style.labelWaitApprove]: isWaitApprove(row),
                 [$style.labelDisabled]: isDisabled(row),
               }"
+              class="label"
+              :data-approved="isApproved(row)"
+              :data-wait-approve="isWaitApprove(row)"
+              :data-disabled="isDisabled(row)"
               >{{ row?.status }}</span
             >
             <span :class="$style.cellText">{{ row?.name }}</span>
@@ -25,6 +34,7 @@
     <div v-if="lastPage > 1" :class="$style.paginator">
       <button
         :class="$style.button"
+        class="darkBtn"
         :disabled="currentPage === 1"
         @click="clickPrev"
       >
@@ -33,6 +43,7 @@
       <div :class="$style.pages">{{ props.currentPage }}</div>
       <button
         :class="$style.button"
+        class="darkBtn"
         :disabled="currentPage === lastPage"
         @click="clickNext"
       >
@@ -59,6 +70,24 @@ const isWaitApprove = (item) => item.status === VpnStatus.WaitForApprove;
 const isDisabled = (item) => item.status === VpnStatus.Disabled;
 </script>
 
+<style scoped>
+.rowDark:hover {
+  @apply dark:bg-gray-800;
+}
+.label[data-approved="true"] {
+  @apply dark:bg-green-900;
+}
+
+.label[data-wait-approve="true"] {
+  @apply dark:bg-blue-900;
+}
+.label[data-disabled="true"] {
+  @apply dark:bg-red-900;
+}
+.darkBtn {
+  @apply dark:bg-gray-800 dark:disabled:bg-gray-600;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col mt-2;

@@ -8,6 +8,7 @@
             v-model="forUserEmail"
             v-focus
             :class="$style.input"
+            class="darkInput"
             type="email"
             :placeholder="tp('placeholderEmail')"
           />
@@ -16,6 +17,7 @@
           <input
             v-model="prefix"
             :class="$style.input"
+            class="darkInput"
             type="text"
             :placeholder="tp('placeholderPrefix')"
           />
@@ -27,6 +29,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="darkBtnCancel"
           @click="closeModal"
         >
           {{ tp("buttonCancel") }}
@@ -34,6 +37,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCreate]"
+          class="darkBtnCreate"
           :disabled="isLoading"
           @click="createVpnHandler"
         >
@@ -58,6 +62,17 @@ const createVpnHandler = async () => {
   closeModal();
 };
 </script>
+<style scoped>
+.darkInput {
+  @apply dark:bg-gray-600 dark:text-gray-300 dark:border-gray-400  dark:focus:ring-gray-800;
+}
+.darkBtnCancel {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+.darkBtnCreate {
+  @apply dark:bg-blue-900 dark:hover:bg-blue-800;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;

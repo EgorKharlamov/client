@@ -7,13 +7,15 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="darkButtonCancel"
           @click="emit('close')"
         >
           {{ tp("buttonCancel") }}
         </button>
         <button
           type="button"
-          :class="[$style.button, $style.buttonCreate]"
+          :class="[$style.button, $style.buttonDelete]"
+          class="buttonDeleteDark"
           :disabled="isLoading"
           @click="deleteServerHandler"
         >
@@ -48,6 +50,14 @@ const deleteServerHandler = async () => {
 };
 </script>
 
+<style scoped>
+.buttonDeleteDark {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+.darkButtonCancel {
+  @apply dark:bg-gray-900 dark:hover:bg-gray-800 dark:border-none;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;
@@ -69,7 +79,7 @@ const deleteServerHandler = async () => {
   @apply border border-gray-500 transition;
 }
 
-.buttonCreate {
+.buttonDelete {
   @apply bg-red-500 text-white hover:bg-red-600 transition;
 }
 </style>

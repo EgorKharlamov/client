@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.bg">
-    <div ref="target" :class="$style.container">
+  <div :class="$style.bg" class="darkBg">
+    <div ref="target" :class="$style.container" class="darkContainer">
       <button type="button" :class="$style.buttonExit" @click="closeModal">
         <x-mark-icon :class="$style.icon" />
       </button>
@@ -36,6 +36,15 @@ onBeforeUnmount(() => {
   document.querySelector("body").classList.remove("modal-opened");
 });
 </script>
+
+<style scoped>
+.darkBg {
+  @apply dark:bg-gray-800/75;
+}
+.darkContainer {
+  @apply dark:bg-gray-700;
+}
+</style>
 
 <style module>
 .bg {

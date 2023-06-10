@@ -7,14 +7,17 @@ import { userEndpoint } from "~/api/endpoints/userEndpoints";
 import { getApiError } from "~/utils/error";
 
 export const useLogin = () => {
+  const config = useRuntimeConfig();
+  const { isDev } = config.public;
+
   const currentTab = useState("currentTab", () => Tabs.SignUp);
   const secondTab = useState("secondTab", () => Tabs.SignIn);
 
-  const email = ref("");
-  const phone = ref("");
-  const pass = ref("");
-  const passRepeat = ref("");
-  const name = ref("");
+  const email = ref(isDev ? DEV_LOGIN.email : "");
+  const phone = ref(isDev ? DEV_LOGIN.phone : "");
+  const pass = ref(isDev ? DEV_LOGIN.pass : "");
+  const passRepeat = ref(isDev ? DEV_LOGIN.passRepeat : "");
+  const name = ref(isDev ? DEV_LOGIN.name : "");
 
   const typePass = ref("password");
   const typePassRepeat = ref("password");

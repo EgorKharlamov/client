@@ -19,6 +19,7 @@
               <button
                 type="button"
                 :class="[$style.btn, $style.deleteBtn]"
+                class="buttonDeleteDark"
                 @click="deleteUserClick(user)"
               >
                 {{ $t("users.buttonDelete") }}
@@ -26,6 +27,7 @@
               <button
                 type="button"
                 :class="[$style.btn, $style.updateBtn]"
+                class="darkButtonUpdate"
                 @click="updateUserRoleClick(user)"
               >
                 {{ $t("users.buttonUpdate") }}
@@ -103,6 +105,14 @@ const usersForTable = computed(() =>
 await loadUsers();
 </script>
 
+<style scoped>
+.buttonDeleteDark {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+.darkButtonUpdate {
+  @apply dark:bg-green-900 dark:hover:bg-green-800;
+}
+</style>
 <style module>
 .table {
   @apply table-auto w-full mt-2;

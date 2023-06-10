@@ -7,12 +7,16 @@
           v-if="canUserLoadServers() || canUserLoadVpns()"
           to="/"
           :class="{ [$style.link]: true, [$style.linkActive]: activeRouteHome }"
+          class="darkLink"
+          :data-active="activeRouteHome"
           >{{ $t("layout.tabs.home") }}</nuxt-link
         >
         <nuxt-link
           v-if="canUserLoadVpns()"
           to="/vpns"
           :class="{ [$style.link]: true, [$style.linkActive]: activeRouteVpn }"
+          class="darkLink"
+          :data-active="activeRouteVpn"
           >{{ $t("layout.tabs.vpn") }}</nuxt-link
         >
         <nuxt-link
@@ -22,6 +26,8 @@
             [$style.link]: true,
             [$style.linkActive]: activeRouteServer,
           }"
+          class="darkLink"
+          :data-active="activeRouteServer"
           >{{ $t("layout.tabs.servers") }}</nuxt-link
         >
         <nuxt-link
@@ -31,6 +37,8 @@
             [$style.link]: true,
             [$style.linkActive]: activeRouteUsers,
           }"
+          class="darkLink"
+          :data-active="activeRouteUsers"
           >{{ $t("layout.tabs.users") }}</nuxt-link
         >
       </div>
@@ -58,6 +66,15 @@ const activeRouteServer = computed(() => route.path === "/servers");
 const activeRouteVpn = computed(() => route.path === "/vpns");
 const activeRouteUsers = computed(() => route.path === "/users");
 </script>
+
+<style scoped>
+.darkLink {
+  @apply dark:border-gray-900 dark:bg-gray-800 dark:text-gray-400;
+}
+.darkLink[data-active="true"] {
+  @apply dark:bg-gray-900 dark:text-gray-300;
+}
+</style>
 
 <style module>
 .container {

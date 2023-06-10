@@ -3,6 +3,7 @@
     <input
       v-model="email"
       :class="$style.input"
+      class="darkInput"
       type="email"
       placeholder="email"
     />
@@ -11,15 +12,24 @@
     <input
       v-model="pass"
       :type="typePass"
+      class="darkInput"
       :class="$style.input"
       placeholder="password"
     />
     <button type="button" :class="$style.buttonEye" @click="toggleTypePass">
-      <eye-icon v-if="typePass === 'password'" :class="$style.eyeIcon" />
-      <eye-slash-icon v-if="typePass === 'text'" :class="$style.eyeIcon" />
+      <eye-icon
+        v-if="typePass === 'password'"
+        :class="$style.eyeIcon"
+        class="darkEye"
+      />
+      <eye-slash-icon
+        v-if="typePass === 'text'"
+        :class="$style.eyeIcon"
+        class="darkEye"
+      />
     </button>
   </label>
-  <button type="button" :class="$style.button" @click="signIn">
+  <button type="button" :class="$style.button" class="darkBtn" @click="signIn">
     {{ $t("signInAction") }}
   </button>
 </template>
@@ -30,6 +40,18 @@ import { useLogin } from "~/composables/useLogin";
 
 const { email, pass, typePass, toggleTypePass, signIn } = useLogin();
 </script>
+
+<style scoped>
+.darkInput {
+  @apply dark:bg-gray-600 dark:text-gray-300 dark:border-gray-400  dark:focus:ring-gray-800;
+}
+.darkEye {
+  @apply dark:text-gray-800;
+}
+.darkBtn {
+  @apply dark:bg-gray-800;
+}
+</style>
 
 <style module>
 .label {

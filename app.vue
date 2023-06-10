@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="darkBody">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -7,6 +7,10 @@
 </template>
 
 <script setup>
+import { useDark } from "@vueuse/core";
+
+useDark();
+
 const { locale } = useI18n();
 const cookie = useCookie("lang");
 if (cookie?.value) locale.value = cookie.value;
@@ -16,6 +20,10 @@ if (cookie?.value) locale.value = cookie.value;
 
 body.modal-opened {
   overflow: hidden;
+}
+
+body {
+  @apply dark:bg-gray-700 dark:text-gray-300;
 }
 
 .page-enter-active,

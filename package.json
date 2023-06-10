@@ -2,6 +2,7 @@
   "name": "vpn_manager",
   "version": "0.1.0",
   "author": "Egor Kharlamov",
+  "type": "module",
   "description": "VPN manager",
   "engines": {
     "node": "18.16.0",

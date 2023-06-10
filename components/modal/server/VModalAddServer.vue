@@ -7,6 +7,7 @@
           <input
             v-model="name"
             :class="$style.input"
+            class="darkInput"
             type="text"
             :placeholder="tp('placeholderName')"
           />
@@ -15,6 +16,7 @@
           <input
             v-model="address"
             :class="$style.input"
+            class="darkInput"
             type="text"
             :placeholder="tp('placeholderAddress')"
           />
@@ -23,6 +25,7 @@
           <input
             v-model="maxUsers"
             :class="$style.input"
+            class="darkInput"
             type="number"
             :placeholder="tp('placeholderMaxUsers')"
           />
@@ -34,6 +37,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCancel]"
+          class="buttonCancelDark"
           @click="emit('close')"
         >
           {{ tp("buttonCancel") }}
@@ -41,6 +45,7 @@
         <button
           type="button"
           :class="[$style.button, $style.buttonCreate]"
+          class="buttonCreateDark"
           :disabled="isLoading"
           @click="createServerHandler"
         >
@@ -67,6 +72,17 @@ const createServerHandler = async () => {
 };
 </script>
 
+<style scoped>
+.darkInput {
+  @apply dark:bg-gray-600 dark:text-gray-300 dark:border-gray-400  dark:focus:ring-gray-800;
+}
+.buttonCancelDark {
+  @apply dark:bg-red-900 dark:hover:bg-red-800;
+}
+.buttonCreateDark {
+  @apply dark:bg-blue-900 dark:hover:bg-blue-800;
+}
+</style>
 <style module>
 .container {
   @apply flex flex-col gap-2;
