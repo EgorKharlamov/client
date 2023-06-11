@@ -1,5 +1,6 @@
 import { useRouter } from "#app";
 import { useToast } from "vue-toastification";
+import dayjs from "dayjs";
 import { useApi } from "~/composables/useApi";
 import { Method } from "~/api/constants";
 import { Tabs } from "~/components/login/constants";
@@ -22,7 +23,26 @@ export const useLogin = () => {
   const typePass = ref("password");
   const typePassRepeat = ref("password");
 
-  const auth = useCookie("auth");
+  const getCookieParams = () => {
+    const cookieParams = {
+      maxAge: 60 * 60 * 24 * 7,
+      expires: dayjs().add(7, "d").toDate(),
+    };
+    const cookieProdParams = {
+      sameSite: "strict",
+      secure: true,
+      httpOnly: false,
+    };
+    if (isDev) {
+      return cookieParams;
+    } else {
+      return {
+        ...cookieParams,
+        ...cookieProdParams,
+      };
+    }
+  };
+  const auth = useCookie("auth", getCookieParams());
 
   const router = useRouter();
   const toast = useToast();
