@@ -79,6 +79,7 @@ import VModalApproveVpnConfirm from "~/components/modal/vpn/VModalApproveVpnConf
 import { VpnStatus } from "~/api/constants";
 import VTable from "~/components/VTable.vue";
 import { useUserStore } from "~/store/userStore";
+import { canUserViewAllTableVpnsInfo } from "~/utils/canUser";
 
 definePageMeta({
   middleware: ["auth", "client"],
@@ -112,23 +113,39 @@ const createByUserId = (id: number) => {
   if (isItMe(id)) return capitalize(t("vpns.tableBodyCellCreator"));
   return id;
 };
-const headers = computed(() => [
-  t("vpns.tableHeaders.id"),
-  t("vpns.tableHeaders.userId"),
-  t("vpns.tableHeaders.name"),
-  t("vpns.tableHeaders.serverAddr"),
-  t("vpns.tableHeaders.userEmail"),
-  t("vpns.tableHeaders.status"),
-]);
+const headers = computed(() => {
+  let res = [
+    canUserViewAllTableVpnsInfo() && t("vpns.tableHeaders.id"),
+    canUserViewAllTableVpnsInfo() && t("vpns.tableHeaders.userId"),
+    t("vpns.tableHeaders.name"),
+    canUserViewAllTableVpnsInfo() && t("vpns.tableHeaders.serverAddr"),
+    t("vpns.tableHeaders.userEmail"),
+    t("vpns.tableHeaders.status"),
+  ];
+
+  res = res.filter((el) => el !== false);
+
+  return res;
+});
 const vpnsForTable = computed(() =>
-  getVpns.value.map((vpn) => ({
-    id: vpn.id,
-    createdByUserId: createByUserId(vpn.createdByUserId),
-    name: vpn.name,
-    serverAddr: vpn.serverAddr,
-    forUserEmail: vpn.forUserEmail,
-    status: vpn.status,
-  }))
+  getVpns.value.map((vpn) => {
+    let res = {
+      name: vpn.name,
+      forUserEmail: vpn.forUserEmail,
+      status: vpn.status,
+    };
+    if (canUserViewAllTableVpnsInfo()) {
+      res = {
+        id: vpn.id,
+        createdByUserId: createByUserId(vpn.createdByUserId),
+        name: vpn.name,
+        serverAddr: vpn.serverAddr,
+        forUserEmail: vpn.forUserEmail,
+        status: vpn.status,
+      };
+    }
+    return res;
+  })
 );
 
 const vpnsForTableMobile = computed(() =>

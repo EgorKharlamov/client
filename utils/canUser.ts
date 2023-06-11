@@ -15,3 +15,7 @@ export const canUserLoadVpns = (): boolean => {
     userStore.getUserRole
   );
 };
+export const canUserViewAllTableVpnsInfo = (): boolean => {
+  const userStore = useUserStore();
+  return userStore.getUserRole === UserRoles.SuperAdmin;
+};
