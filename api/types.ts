@@ -18,9 +18,9 @@ export interface ServerEntity {
 
 export interface VpnEntity {
   id: number;
-  createdByUserId: number;
+  userName: number;
   name: string;
-  serverAddr: string;
+  serverName: string;
   forUserEmail: string;
   status: VpnStatus;
 }

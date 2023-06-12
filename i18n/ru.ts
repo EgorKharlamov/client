@@ -65,7 +65,7 @@ export const ru = {
       id: "#",
       userId: "создатель",
       name: "имя",
-      serverAddr: "адрес сервера",
+      serverAddr: "имя сервера",
       userEmail: "почта пользователя",
       status: "статус",
     },
@@ -94,6 +94,7 @@ export const ru = {
     tableHeader: {
       id: "#",
       name: "имя",
+      invites: "приглашения",
       email: "почта",
       role: "роль",
       phone: "телефон",

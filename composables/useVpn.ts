@@ -2,15 +2,12 @@ import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { debounce } from "lodash-es";
 import { useVpnsStore } from "~/store/vpnsStore";
-import { useServersStore } from "~/store/serversStore";
 import { VpnStatus } from "~/api/constants";
 
 export const useVpn = () => {
   const toast = useToast();
   const vpnStore = useVpnsStore();
   const { getVpns, getCount } = storeToRefs(vpnStore);
-  const serverStore = useServersStore();
-  const { getServers } = storeToRefs(serverStore);
   const serverAddr = ref("");
   const forUserEmail = ref("");
   const count = ref(1);
@@ -54,13 +51,7 @@ export const useVpn = () => {
   const createVpn = async () => {
     isLoading.value = true;
     try {
-      await serverStore.loadServers();
-      const availableServer = getServers.value.find(
-        (server) => server.availableSlots
-      );
-      const serverAddr = availableServer?.addr;
       const data = {
-        serverAddr,
         forUserEmail: forUserEmail.value,
         count: count.value,
         prefix: prefix.value,

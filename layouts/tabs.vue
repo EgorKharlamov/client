@@ -78,7 +78,7 @@ const activeRouteUsers = computed(() => route.path === "/users");
 
 <style module>
 .container {
-  @apply max-w-[800px]  mx-auto mt-1 px-2 py-1 sm:mt-5;
+  @apply max-w-[1500px]  mx-auto mt-1 px-2 py-1 sm:mt-5;
 }
 
 .links {

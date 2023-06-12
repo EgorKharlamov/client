@@ -88,6 +88,7 @@ const { t } = useI18n();
 const headers = computed(() => [
   t("users.tableHeader.id"),
   t("users.tableHeader.name"),
+  t("users.tableHeader.invites"),
   t("users.tableHeader.email"),
   t("users.tableHeader.role"),
   t("users.tableHeader.phone"),
@@ -96,6 +97,7 @@ const usersForTable = computed(() =>
   getUsers.value?.map((user) => ({
     id: user.id,
     name: user.name,
+    totalVpnsInvites: user.totalVpnsInvites,
     email: user.email,
     role: user.role,
     phone: user.phone,

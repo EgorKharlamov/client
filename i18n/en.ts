@@ -65,7 +65,7 @@ export const en = {
       id: "id",
       userId: "creator",
       name: "name",
-      serverAddr: "server address",
+      serverAddr: "server name",
       userEmail: "user email",
       status: "status",
     },
@@ -94,6 +94,7 @@ export const en = {
     tableHeader: {
       id: "id",
       name: "name",
+      invites: "invites",
       email: "email",
       role: "role",
       phone: "phone",

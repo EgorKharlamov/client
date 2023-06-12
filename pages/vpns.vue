@@ -71,14 +71,12 @@
 
 <script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/24/solid";
-import { capitalize } from "lodash-es";
 import { useWindowSize } from "@vueuse/core";
 import { useVpn } from "~/composables/useVpn";
 import VModalAddVpn from "~/components/modal/vpn/VModalAddVpn.vue";
 import VModalApproveVpnConfirm from "~/components/modal/vpn/VModalApproveVpnConfirm.vue";
 import { VpnStatus } from "~/api/constants";
 import VTable from "~/components/VTable.vue";
-import { useUserStore } from "~/store/userStore";
 import { canUserViewAllTableVpnsInfo } from "~/utils/canUser";
 
 definePageMeta({
@@ -91,8 +89,6 @@ defineOptions({
 });
 
 const { width } = useWindowSize();
-
-const { isItMe } = useUserStore();
 
 const {
   loadVpns,
@@ -109,10 +105,6 @@ const {
 } = useVpn();
 
 const { t } = useI18n();
-const createByUserId = (id: number) => {
-  if (isItMe(id)) return capitalize(t("vpns.tableBodyCellCreator"));
-  return id;
-};
 const headers = computed(() => {
   let res = [
     canUserViewAllTableVpnsInfo() && t("vpns.tableHeaders.id"),
@@ -137,9 +129,9 @@ const vpnsForTable = computed(() =>
     if (canUserViewAllTableVpnsInfo()) {
       res = {
         id: vpn.id,
-        createdByUserId: createByUserId(vpn.createdByUserId),
+        createdByUserId: vpn.userName,
         name: vpn.name,
-        serverAddr: vpn.serverAddr,
+        serverAddr: vpn.serverName,
         forUserEmail: vpn.forUserEmail,
         status: vpn.status,
       };
