@@ -18,7 +18,7 @@ export interface ServerEntity {
 
 export interface VpnEntity {
   id: number;
-  userName: number;
+  user: Partial<UserEntity>;
   name: string;
   serverName: string;
   forUserEmail: string;

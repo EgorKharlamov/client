@@ -129,7 +129,7 @@ const vpnsForTable = computed(() =>
     if (canUserViewAllTableVpnsInfo()) {
       res = {
         id: vpn.id,
-        createdByUserId: vpn.userName,
+        createdByUserId: `${vpn.user.name}_${vpn.user.id}`,
         name: vpn.name,
         serverAddr: vpn.serverName,
         forUserEmail: vpn.forUserEmail,
